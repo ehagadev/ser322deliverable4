@@ -1,37 +1,26 @@
-HELP.md
+##############################
+## Java
+##############################
+.mtj.tmp/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+
+##############################
+## Maven
+##############################
 target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
-
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
-.vscode/
-
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+pom.xml.bak
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 mvnw
@@ -40,7 +29,68 @@ mvnw.cmd
 .mvnw/
 
 ##############################
+## Eclipse
+##############################
+/target/
+.settings/
+bin/
+tmp/
+.metadata
+.classpath
+.project
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+.factorypath
+
+##############################
+# Compiled class files
+##############################
+target/
+
+##############################
+# IDE files (Eclipse, IntelliJ IDEA, Visual Studio Code, etc.)
+##############################
+.idea/
+.vscode/
+
+##############################
+# Logs
+##############################
+logs/
+*.log
+
+##############################
+# Spring Boot 
+##############################
+
+# Spring Boot generated cache
+spring-boot-starter-data-rest/
+
+##############################
+# Generated files by IDE or build system
+##############################
+/.classpath
+/.project
+/.settings/
+/target
+
+##############################
 # OS-specific files
 ##############################
 .DS_Store
+Thumbs.db
 
+##############################
+# Python
+##############################
+*.pyc
+
+##############################
+## Build scripts
+##############################
+sb.sh
+*application-local.properties
