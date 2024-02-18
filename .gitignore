@@ -32,6 +32,15 @@ build/
 ### VS Code ###
 .vscode/
 
-# Maven Wrapper
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+mvnw
+mvnw.cmd
 .mvn/
+.mvnw/
+
+##############################
+# OS-specific files
+##############################
+.DS_Store
 
