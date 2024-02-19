@@ -3,18 +3,21 @@ package com.ser322deliverable4.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "trim_level")
-public class TrimLevel {
+@Table(name = "model")
+public class Model {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long trimId;
+    private Long modelId;
 
     @Column(length = 100)
     private String name;
 
     @Column(name = "\"year\"")
     private String year;
+
+    @Column(length = 100)
+    private String style;
 
     @ManyToOne
     @JoinColumn(
@@ -23,21 +26,30 @@ public class TrimLevel {
     )
     private Manufacturer manufacturerEntity;
 
-    public TrimLevel() {
+    @ManyToOne
+    @JoinColumn(
+            name = "trim_level",
+            referencedColumnName = "trimId"
+    )
+    private TrimLevel trimLevel;
+
+    public Model() {
     }
 
-    public TrimLevel(String name, String year, Manufacturer manufacturerEntity) {
+    public Model(String name, String year, String style, Manufacturer manufacturerEntity, TrimLevel trimLevel) {
         this.name = name;
         this.year = year;
+        this.style = style;
         this.manufacturerEntity = manufacturerEntity;
+        this.trimLevel = trimLevel;
     }
 
-    public Long getTrimId() {
-        return trimId;
+    public Long getModelId() {
+        return modelId;
     }
 
-    public void setTrimId(Long trimId) {
-        this.trimId = trimId;
+    public void setModelId(Long modelId) {
+        this.modelId = modelId;
     }
 
     public String getName() {
@@ -56,11 +68,27 @@ public class TrimLevel {
         this.year = year;
     }
 
+    public String getStyle() {
+        return style;
+    }
+
+    public void setStyle(String style) {
+        this.style = style;
+    }
+
     public Manufacturer getManufacturerEntity() {
         return manufacturerEntity;
     }
 
     public void setManufacturerEntity(Manufacturer manufacturerEntity) {
         this.manufacturerEntity = manufacturerEntity;
+    }
+
+    public TrimLevel getTrimLevel() {
+        return trimLevel;
+    }
+
+    public void setTrimLevel(TrimLevel trimLevel) {
+        this.trimLevel = trimLevel;
     }
 }
