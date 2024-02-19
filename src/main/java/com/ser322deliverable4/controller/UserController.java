@@ -1,7 +1,7 @@
 package com.ser322deliverable4.controller;
 
 import com.ser322deliverable4.model.User;
-import com.ser322deliverable4.service.IUserService;
+import com.ser322deliverable4.service.user.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;

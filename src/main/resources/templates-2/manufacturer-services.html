@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manufacturer Services</title>
+</head>
+<body>
+
+<h2>Manufacturer Services</h2>
+
+<!-- Display existing users if the list is not empty -->
+<th:block th:if="${#lists.size(manList) > 0}">
+    <h3>Existing Manufacturers:</h3>
+    <div th:each="man : ${manList}">
+        <p>Id: <span th:text="${man.id}"></span></p>
+        <p>Name: <span th:text="${man.name}"></span></p>
+        <p>Country: <span th:text="${man.country}"></span></p>
+
+<!--        &lt;!&ndash; Controller method call GetUserById, then opens new edit form &ndash;&gt;-->
+<!--        <a th:href="@{/edit-user/{userId}(userId=${existingUser.id})}">Edit</a>-->
+
+<!--        &lt;!&ndash; Controller method call DeleteUserById, re-render user-services &ndash;&gt;-->
+<!--        <a th:href="@{/delete-user/{userId}(userId=${existingUser.id})}">Delete</a>-->
+
+        <hr>
+    </div>
+</th:block>
+
+
+<!-- Display a message if the list is empty -->
+<th:block th:if="${#lists.size(manList) == 0}">
+    <p>No existing Manufacturers.</p>
+</th:block>
+
+<!--Add a Manufacturer form-->
+<th:block th:if="${manufacturer != null}">
+    <form th:action="@{/add-manufacturer}" method="post" th:object="${manufacturer}">
+
+        <label>Name: </label>
+        <input type="text" th:field="*{name}" /><br>
+
+        <label>Country: </label>
+        <input type="text" th:field="*{country}" /><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</th:block>
+
+</body>
+</html>
+
+<script>
+    // Function to open the edit user pop-up form with user details
+    function openEditForm(user) {
+        document.getElementById('editUserForm').style.display = 'flex';
+        document.getElementById('editUserId').value = user.id;
+        document.getElementById('editUserEmail').value = user.email;
+        document.getElementById('editUserFirstName').value = user.firstName;
+        document.getElementById('editUserLastName').value = user.lastName;
+    }
+
+    // Function to close the edit user pop-up form
+    function closeEditForm() {
+        document.getElementById('editUserForm').style.display = 'none';
+    }
+</script>

@@ -1,4 +1,4 @@
-package com.ser322deliverable4.service;
+package com.ser322deliverable4.service.user;
 
 import com.ser322deliverable4.model.User;
 import com.ser322deliverable4.repository.UserRepository;
