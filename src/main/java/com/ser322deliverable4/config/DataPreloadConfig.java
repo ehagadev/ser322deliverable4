@@ -15,10 +15,14 @@ public class DataPreloadConfig {
                                          ManufacturerRepository manufacturerRepository,
                                          TrimLevelRepository trimLevelRepository,
                                          FeatureRepository featureRepository,
-                                         ModelRepository modelRepository) {
+                                         ModelRepository modelRepository,
+                                         VehicleRepository vehicleRepository,
+                                         SavesRepository savesRepository,
+                                         ModelFeaturesRepository modelFeaturesRepository,
+                                         TrimFeaturesRepository trimFeaturesRepository) {
         return args -> {
             // Preload Users
-            User user1 = new User("secretWindowsFan@apple.com", "'Steve'", "'Jobs'");
+            User user1 = new User("secretWindowsFan@apple.com", "Steve", "Jobs");
             User savedUser1 = userRepository.save(user1);
             User user2 = new User("WindowsFTW@windows.com", "Bill", "Gates");
             User savedUser2 = userRepository.save(user2);
@@ -46,6 +50,31 @@ public class DataPreloadConfig {
             Model savedModel1 = modelRepository.save(model1);
             Model model2 = new Model("Silverado", "2022", "Pickup", savedMan2, savedTrimLevel2);
             Model savedModel2 = modelRepository.save(model2);
+
+            // Preload Vehicles
+            Vehicle vehicle1 = new Vehicle("111111111111", savedModel1, "Red", savedMan1);
+            Vehicle savedVehicle1 = vehicleRepository.save(vehicle1);
+            Vehicle vehicle2 = new Vehicle("'222222222222'", savedModel2, "Blue", savedMan2);
+            Vehicle savedVehicle2 = vehicleRepository.save(vehicle2);
+
+            // Preload Saves
+            Saves saves1 = new Saves(savedUser1, savedVehicle1);
+            Saves savedSaves1 = savesRepository.save(saves1);
+            Saves saves2 = new Saves(savedUser2, savedVehicle2);
+            Saves savedSaves2 = savesRepository.save(saves2);
+
+            // Preload ModelFeatures
+            ModelFeatures modelFeatures1 = new ModelFeatures(savedModel1, savedFeature1);
+            ModelFeatures savedModelFeatures1 = modelFeaturesRepository.save(modelFeatures1);
+            ModelFeatures modelFeatures2 = new ModelFeatures(savedModel2, savedFeature2);
+            ModelFeatures savedModelFeatures2 = modelFeaturesRepository.save(modelFeatures2);
+
+            // Preload TrimFeatures
+            TrimFeatures trimFeatures1 = new TrimFeatures(savedFeature1, savedTrimLevel1);
+            TrimFeatures savedTrimFeatures1 = trimFeaturesRepository.save(trimFeatures1);
+            TrimFeatures trimFeatures2 = new TrimFeatures(savedFeature2, savedTrimLevel2);
+            TrimFeatures savedTrimFeatures2 = trimFeaturesRepository.save(trimFeatures2);
+
         };
     }
 }
