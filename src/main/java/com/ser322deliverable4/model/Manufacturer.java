@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 public class Manufacturer {
 
     @Id
+    @NotNull
     @Column(unique = true, length = 50)
     private String name;
 

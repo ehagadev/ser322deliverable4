@@ -12,6 +12,7 @@ public class Feature {
     @Column(length = 100)
     private String name;
 
+    @NotNull
     @Column(length = 255)
     private String description;
 
