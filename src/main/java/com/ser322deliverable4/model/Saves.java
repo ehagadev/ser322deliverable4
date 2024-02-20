@@ -1,5 +1,6 @@
 package com.ser322deliverable4.model;
 
+import com.ser322deliverable4.composites.SavesId;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -8,16 +9,17 @@ import java.io.Serializable;
 @Table(name = "saves")
 public class Saves {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    private SavesId id;
 
+    @MapsId("userId")
     @ManyToOne
-    @JoinColumn(name = "\"user\"", referencedColumnName = "id")
+    @JoinColumn(name = "userId", referencedColumnName = "id")
     private User user;
 
+    @MapsId("vehicleVin")
     @ManyToOne
-    @JoinColumn(name = "vin", referencedColumnName = "vin")
+    @JoinColumn(name = "vehicleVin", referencedColumnName = "vin")
     private Vehicle vehicle;
 
     public Saves() {
@@ -26,13 +28,14 @@ public class Saves {
     public Saves(User user, Vehicle vehicle) {
         this.user = user;
         this.vehicle = vehicle;
+        this.id = new SavesId(user.getId(), vehicle.getVin());
     }
 
-    public Long getId() {
+    public SavesId getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(SavesId id) {
         this.id = id;
     }
 
