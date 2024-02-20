@@ -12,7 +12,6 @@
 <th:block th:if="${#lists.size(manList) > 0}">
     <h3>Existing Manufacturers:</h3>
     <div th:each="man : ${manList}">
-        <p>Id: <span th:text="${man.id}"></span></p>
         <p>Name: <span th:text="${man.name}"></span></p>
         <p>Country: <span th:text="${man.country}"></span></p>
 
