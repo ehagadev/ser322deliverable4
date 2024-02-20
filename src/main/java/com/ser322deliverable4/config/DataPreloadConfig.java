@@ -52,9 +52,9 @@ public class DataPreloadConfig {
             Model savedModel2 = modelRepository.save(model2);
 
             // Preload Vehicles
-            Vehicle vehicle1 = new Vehicle("111111111111", savedModel1, "Red", savedMan1);
+            Vehicle vehicle1 = new Vehicle("111111111111", savedModel1, "Red");
             Vehicle savedVehicle1 = vehicleRepository.save(vehicle1);
-            Vehicle vehicle2 = new Vehicle("'222222222222'", savedModel2, "Blue", savedMan2);
+            Vehicle vehicle2 = new Vehicle("'222222222222'", savedModel2, "Blue");
             Vehicle savedVehicle2 = vehicleRepository.save(vehicle2);
 
             // Preload Saves
