@@ -17,18 +17,13 @@ public class Vehicle {
     @Column(length = 50)
     private String color;
 
-    @ManyToOne
-    @JoinColumn(name = "manufacturer", referencedColumnName = "name")
-    private Manufacturer manufacturer;
-
     public Vehicle() {
     }
 
-    public Vehicle(String vin, Model model, String color, Manufacturer manufacturer) {
+    public Vehicle(String vin, Model model, String color) {
         this.vin = vin;
         this.model = model;
         this.color = color;
-        this.manufacturer = manufacturer;
     }
 
     public String getVin() {
@@ -55,11 +50,4 @@ public class Vehicle {
         this.color = color;
     }
 
-    public Manufacturer getManufacturer() {
-        return manufacturer;
-    }
-
-    public void setManufacturer(Manufacturer manufacturer) {
-        this.manufacturer = manufacturer;
-    }
 }

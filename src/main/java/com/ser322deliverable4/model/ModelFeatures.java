@@ -1,21 +1,24 @@
 package com.ser322deliverable4.model;
 
+import com.ser322deliverable4.composites.ModelFeatureId;
 import jakarta.persistence.*;
+
 
 @Entity
 @Table(name = "model_features")
 public class ModelFeatures {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    private ModelFeatureId id;
 
+    @MapsId("modelId")
     @ManyToOne
-    @JoinColumn(name = "\"model\"", referencedColumnName = "modelId")
+    @JoinColumn(name="modelId", referencedColumnName = "modelId")
     private Model model;
 
+    @MapsId("featureName")
     @ManyToOne
-    @JoinColumn(name = "feature", referencedColumnName = "name")
+    @JoinColumn(name="featureName", referencedColumnName = "name")
     private Feature feature;
 
     public ModelFeatures() {
@@ -24,13 +27,14 @@ public class ModelFeatures {
     public ModelFeatures(Model model, Feature feature) {
         this.model = model;
         this.feature = feature;
+        this.id = new ModelFeatureId(model.getModelId(), feature.getName());
     }
 
-    public Long getId() {
+    public ModelFeatureId getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(ModelFeatureId id) {
         this.id = id;
     }
 

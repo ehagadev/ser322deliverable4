@@ -94,3 +94,8 @@ Thumbs.db
 ##############################
 sb.sh
 *application-local.properties
+
+##############################
+## Saved Data
+##############################
+data/
