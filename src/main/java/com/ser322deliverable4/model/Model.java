@@ -21,13 +21,6 @@ public class Model {
 
     @ManyToOne
     @JoinColumn(
-            name = "manufacturer",
-            referencedColumnName = "name"
-    )
-    private Manufacturer manufacturerEntity;
-
-    @ManyToOne
-    @JoinColumn(
             name = "trim_level",
             referencedColumnName = "trimId"
     )
@@ -36,11 +29,10 @@ public class Model {
     public Model() {
     }
 
-    public Model(String name, String year, String style, Manufacturer manufacturerEntity, TrimLevel trimLevel) {
+    public Model(String name, String year, String style, TrimLevel trimLevel) {
         this.name = name;
         this.year = year;
         this.style = style;
-        this.manufacturerEntity = manufacturerEntity;
         this.trimLevel = trimLevel;
     }
 
@@ -74,14 +66,6 @@ public class Model {
 
     public void setStyle(String style) {
         this.style = style;
-    }
-
-    public Manufacturer getManufacturerEntity() {
-        return manufacturerEntity;
-    }
-
-    public void setManufacturerEntity(Manufacturer manufacturerEntity) {
-        this.manufacturerEntity = manufacturerEntity;
     }
 
     public TrimLevel getTrimLevel() {

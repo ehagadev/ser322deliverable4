@@ -46,9 +46,9 @@ public class DataPreloadConfig {
             Feature savedFeature2 = featureRepository.save(feature2);
 
             // Preload Models
-            Model model1 = new Model("Civic", "2023", "Sedan", savedMan1, savedTrimLevel1);
+            Model model1 = new Model("Civic", "2023", "Sedan", savedTrimLevel1);
             Model savedModel1 = modelRepository.save(model1);
-            Model model2 = new Model("Silverado", "2022", "Pickup", savedMan2, savedTrimLevel2);
+            Model model2 = new Model("Silverado", "2022", "Pickup", savedTrimLevel2);
             Model savedModel2 = modelRepository.save(model2);
 
             // Preload Vehicles
