@@ -8,10 +8,6 @@ import jakarta.validation.constraints.NotNull;
 public class Manufacturer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @NotNull
     @Column(unique = true, length = 50)
     private String name;
 
@@ -25,14 +21,6 @@ public class Manufacturer {
     public Manufacturer(String name, String country) {
         this.name = name;
         this.country = country;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
