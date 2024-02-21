@@ -3,6 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Vehicle Services</title>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function setFeatureName() {
+            var e = document.getElementById("featureNameSelect");
+            var selectedFeatureName = e.options[e.selectedIndex].text;
+
+            // log the selected manufacturer name to the console
+            console.log("Selected feature: " + selectedFeatureName);
+
+            document.getElementById("selectedFeatureName").value = selectedFeatureName;
+        }
+        function setTrimLevelName() {
+            var e = document.getElementById("trimLevelNameSelect");
+            var selectedTrimLevelName = e.options[e.selectedIndex].text;
+
+            // log the selected manufacturer name to the console
+            console.log("Selected Trim Level: " + selectedTrimLevelName);
+
+            document.getElementById("selectedTrimLevelName").value = selectedTrimLevelName;
+        }
+        /*]]>*/
+    </script>
 </head>
 <body>
 
@@ -36,10 +59,24 @@
     <button type="submit">Search Vehicles By VIN</button>
 </form>
 
+<form th:action="@{/vehicles-by-feature}" method="get">
+    <select name="featureName">
+        <option th:each="feature : ${allFeatures}" th:value="${feature.name}" th:text="${feature.name}" />
+    </select>
+    <button type="submit">Search Vehicles By Feature</button>
+</form>
+
+<form th:action="@{/vehicles-by-trim-level}" method="get">
+    <select name="trimLevelName">
+        <option th:each="trimLevel : ${allTrimLevels}" th:value="${trimLevel.name}" th:text="${trimLevel.name}" />
+    </select>
+    <button type="submit">Search Vehicles By Trim Level Name</button>
+</form>
+
 
 <!-- Display a message if the list is empty -->
 <th:block th:if="${#lists.size(vehicleList) == 0}">
-    <p>No existing vehicles.</p>
+    <p>No vehicles found in Query.</p>
 </th:block>
 
 <!--Add a vehicle form-->

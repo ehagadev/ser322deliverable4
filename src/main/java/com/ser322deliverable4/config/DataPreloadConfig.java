@@ -44,6 +44,8 @@ public class DataPreloadConfig {
             Feature savedFeature1 = featureRepository.save(feature1);
             Feature feature2 = new Feature("Advanced Safety Package", "Includes collision warning and lane departure warning");
             Feature savedFeature2 = featureRepository.save(feature2);
+            Feature feature3 = new Feature("tint", "Darkens Window, privacy and blocking harmful sun rays");
+            Feature savedFeature3 = featureRepository.save(feature3);
 
             // Preload Models
             Model model1 = new Model("Civic", "2023", "Sedan", savedTrimLevel1);
@@ -66,7 +68,7 @@ public class DataPreloadConfig {
             // Preload ModelFeatures
             ModelFeatures modelFeatures1 = new ModelFeatures(savedModel1, savedFeature1);
             ModelFeatures savedModelFeatures1 = modelFeaturesRepository.save(modelFeatures1);
-            ModelFeatures modelFeatures2 = new ModelFeatures(savedModel2, savedFeature2);
+            ModelFeatures modelFeatures2 = new ModelFeatures(savedModel2, savedFeature3);
             ModelFeatures savedModelFeatures2 = modelFeaturesRepository.save(modelFeatures2);
 
             // Preload TrimFeatures

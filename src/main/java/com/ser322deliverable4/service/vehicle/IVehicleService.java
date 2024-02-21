@@ -10,4 +10,7 @@ public interface IVehicleService {
 
     Vehicle getVehicleByVin(String vin);
 
+    List<Vehicle> getVehicleByFeatureName(String featureName);
+
+    List<Vehicle> getVehiclesByTimeLevel(String trimLevelName);
 }
