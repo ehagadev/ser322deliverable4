@@ -36,4 +36,5 @@ public interface TrimLevelRepository extends JpaRepository<TrimLevel, Long> {
     @Modifying
     @Transactional
     int deleteTrimLevelById(@Param("trimId") Long trimId);
+
 }
