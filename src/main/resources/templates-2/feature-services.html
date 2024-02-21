@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Feature Services</title>
+</head>
+<body>
+
+<h2>Feature Services</h2>
+
+<!-- Display existing features if the list is not empty -->
+<th:block th:if="${#lists.size(featureList) > 0}">
+    <h3>Existing Features:</h3>
+    <div th:each="existingFeature : ${featureList}">
+        <p><b>Name: </b><span th:text="${existingFeature.name}"></span></p>
+        <p><b>Description: </b><span th:text="${existingFeature.description}"></span></p>
+
+        <a th:href="@{/edit-feature/{featureName}(featureName=${existingFeature.name})}">Edit</a>
+
+         <a th:href="@{/delete-feature/{featureName}(featureName=${existingFeature.name})}">Delete</a>
+        <hr>
+    </div>
+</th:block>
+
+
+<!-- Display a message if the list is empty -->
+<th:block th:if="${#lists.size(featureList) == 0}">
+    <p>No existing features.</p>
+</th:block>
+
+<!--Add a feature form-->
+<th:block th:if="${feature != null}">
+    <h3>Add a new Feature:</h3>
+    <form th:action="@{/add-feature}" method="post" th:object="${feature}">
+        <label>Name: </label>
+        <input type="text" th:field="*{name}" /><br>
+
+        <label>Description: </label>
+        <input type="text" th:field="*{description}" /><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</th:block>
+
+</body>
+</html>
