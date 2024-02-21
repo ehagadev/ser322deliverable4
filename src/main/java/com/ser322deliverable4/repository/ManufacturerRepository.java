@@ -19,4 +19,7 @@ public interface ManufacturerRepository extends JpaRepository<Manufacturer, Long
             @Param("country") String country
     );
 
+    @Query(value = "SELECT * FROM Manufacturer WHERE name = :name", nativeQuery = true)
+    Manufacturer findByName(@Param("name") String name);
+
 }

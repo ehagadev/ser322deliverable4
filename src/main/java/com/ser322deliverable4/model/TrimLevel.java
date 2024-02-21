@@ -21,15 +21,15 @@ public class TrimLevel {
             name = "manufacturer",
             referencedColumnName = "name"
     )
-    private Manufacturer manufacturerEntity;
+    private Manufacturer manufacturer;
 
     public TrimLevel() {
     }
 
-    public TrimLevel(String name, String year, Manufacturer manufacturerEntity) {
+    public TrimLevel(String name, String year, Manufacturer manufacturer) {
         this.name = name;
         this.year = year;
-        this.manufacturerEntity = manufacturerEntity;
+        this.manufacturer = manufacturer;
     }
 
     public Long getTrimId() {
@@ -56,11 +56,11 @@ public class TrimLevel {
         this.year = year;
     }
 
-    public Manufacturer getManufacturerEntity() {
-        return manufacturerEntity;
+    public Manufacturer getManufacturer() {
+        return manufacturer;
     }
 
-    public void setManufacturerEntity(Manufacturer manufacturerEntity) {
-        this.manufacturerEntity = manufacturerEntity;
+    public void setManufacturer(Manufacturer manufacturerEntity) {
+        this.manufacturer = manufacturerEntity;
     }
 }

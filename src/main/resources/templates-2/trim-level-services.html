@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Trim Level Services</title>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function setManufacturerName() {
+            var e = document.getElementById("manufacturerSelect");
+            var selectedManufacturerName = e.options[e.selectedIndex].text;
+
+            // log the selected manufacturer name to the console
+            console.log("Selected manufacturer: " + selectedManufacturerName);
+
+            document.getElementById("selectedManufacturerName").value = selectedManufacturerName;
+        }
+        /*]]>*/
+    </script>
+</head>
+<body>
+
+<h2>Trim Level Services</h2>
+
+<!-- If trimLevelList is not empty, show each Trim Level -->
+<th:block th:if="${#lists.size(trimLevelList) > 0}">
+    <h3>Existing Trim Levels:</h3>
+    <div th:each="trimLevel : ${trimLevelList}">
+        <p>Name: <span th:text="${trimLevel.name}"></span></p>
+        <p>Year: <span th:text="${trimLevel.year}"></span></p>
+        <p>Manufacturer: <span th:text="${trimLevel.manufacturer.name}"></span></p>
+
+        <hr>
+    </div>
+</th:block>
+
+<!-- If trim level list is empty, show this message: -->
+<th:block th:if="${#lists.size(trimLevelList) == 0}">
+    <p>No existing trim levels.</p>
+</th:block>
+
+
+<form action="#" th:action="@{/saveTrimLevel}" th:object="${trimLevel}" method="post">
+    <input type="text" th:field="*{name}" placeholder="Name">
+    <input type="text" th:field="*{year}" placeholder="Year">
+    <select name="manufacturerName">
+        <option th:each="manufacturer : ${manufacturers}" th:value="${manufacturer.name}" th:text="${manufacturer.name}" />
+    </select>
+    <button type="submit">Submit</button>
+</form>
+
+</body>
+</html>
