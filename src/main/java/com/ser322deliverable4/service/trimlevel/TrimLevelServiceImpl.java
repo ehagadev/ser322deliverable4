@@ -56,4 +56,31 @@ public class TrimLevelServiceImpl implements ITrimLevelService {
 
     }
 
+    @Override
+    public int editTrimLevel(TrimLevel trimLevel) {
+        logger.info("AT BEGINNING OF EDIT TRIM LEVEL");
+        Optional<TrimLevel> byTrimId = trimLevelRepository.findTrimLevelById(trimLevel.getTrimId());
+        if (byTrimId.isPresent()) {
+            int updatedRows = trimLevelRepository.updateTrimLevelByTrimId(trimLevel.getTrimId(), trimLevel.getName(), trimLevel.getYear(), trimLevel.getManufacturer());
+            logger.info("SUCCESSFULLY EDITED TRIM LEVEL: {}, UPDATED ROWS: {}", trimLevel.getName(), updatedRows);
+            return 1;
+        } else {
+            logger.error("TRIM LEVEL NOT FOUND BY ID: {}", trimLevel.getTrimId());
+            return 0;
+        }
+    }
+
+    @Override
+    public int deleteTrimLevel(Long trimId) {
+        logger.info("ATTEMPTING TO DELETE TRIM LEVEL BY ID: {}", trimId);
+        Optional<TrimLevel> byTrimId = trimLevelRepository.findTrimLevelById(trimId);
+        if (byTrimId.isPresent()) {
+            int response = trimLevelRepository.deleteTrimLevelById(trimId);
+            logger.info("SUCCESSFULLY DELETED TRIM LEVEL BY ID: {}", trimId);
+            return response;
+        } else {
+            logger.error("UNABLE TO FIND TRIM LEVEL BY ID: {}", trimId);
+            return 0;
+        }
+    }
 }
