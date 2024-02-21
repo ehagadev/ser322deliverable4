@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vehicle Services</title>
+</head>
+<body>
+
+<h2>Vehicle Services</h2>
+<a th:href="@{/vehicle-services}">
+    <button>Reload All Vehicles</button>
+</a>
+<!-- Display existing vehicles if the list is not empty -->
+<th:block th:if="${#lists.size(vehicleList) > 0}">
+    <h3>Existing vehicles:</h3>
+    <div th:each="existingVehicle : ${vehicleList}">
+        <p>Vin: <span th:text="${existingVehicle.vin}"></span></p>
+        <p>Model: <span th:text="${existingVehicle.model.name}"></span></p>
+        <p>Model Year: <span th:text="${existingVehicle.model.year}"></span></p>
+        <p>Model Style: <span th:text="${existingVehicle.model.style}"></span></p>
+        <p>Model Trim Level: <span th:text="${existingVehicle.model.trimLevel.name}"></span></p>
+        <p>Color: <span th:text="${existingVehicle.color}"></span></p>
+
+        <!-- Controller method call GetUserById, then opens new edit form -->
+<!--        <a th:href="@{/edit-user/{userId}(userId=${existingUser.id})}">Edit</a>-->
+
+<!--        &lt;!&ndash; Controller method call DeleteUserById, re-render user-services &ndash;&gt;-->
+<!--        <a th:href="@{/delete-user/{userId}(userId=${existingUser.id})}">Delete</a>-->
+
+        <hr>
+    </div>
+</th:block>
+
+<form th:action="@{/vehicle-by-vin}" method="get">
+    <input type="text" name="vin" placeholder="Enter VIN">
+    <button type="submit">Search Vehicles By VIN</button>
+</form>
+
+
+<!-- Display a message if the list is empty -->
+<th:block th:if="${#lists.size(vehicleList) == 0}">
+    <p>No existing vehicles.</p>
+</th:block>
+
+<!--Add a vehicle form-->
+<!--<th:block th:if="${user != null}">-->
+<!--    <form th:action="@{/add-user}" method="post" th:object="${user}">-->
+<!--        <label>Email: </label>-->
+<!--        <input type="text" th:field="*{email}" /><br>-->
+
+<!--        <label>First Name: </label>-->
+<!--        <input type="text" th:field="*{firstName}" /><br>-->
+
+<!--        <label>Last Name: </label>-->
+<!--        <input type="text" th:field="*{lastName}" /><br>-->
+
+<!--        <input type="submit" value="Submit">-->
+<!--    </form>-->
+<!--</th:block>-->
+
+</body>
+</html>
+
+<!--<script>-->
+<!--    // Function to open the edit user pop-up form with user details-->
+<!--    function openEditForm(user) {-->
+<!--        document.getElementById('editUserForm').style.display = 'flex';-->
+<!--        document.getElementById('editUserId').value = user.id;-->
+<!--        document.getElementById('editUserEmail').value = user.email;-->
+<!--        document.getElementById('editUserFirstName').value = user.firstName;-->
+<!--        document.getElementById('editUserLastName').value = user.lastName;-->
+<!--    }-->
+
+<!--    // Function to close the edit user pop-up form-->
+<!--    function closeEditForm() {-->
+<!--        document.getElementById('editUserForm').style.display = 'none';-->
+<!--    }-->
+<!--</script>-->

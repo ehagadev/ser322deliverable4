@@ -1,11 +1,7 @@
 package com.ser322deliverable4.service.vehicle;
 
-import com.ser322deliverable4.model.User;
-//import com.ser322deliverable4.model.User;
 import com.ser322deliverable4.model.Vehicle;
-//import com.ser322deliverable4.repository.UserRepository;
 import com.ser322deliverable4.repository.VehicleRepository;
-//import com.ser322deliverable4.service.user.UserServiceImpl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +10,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-public class VehicleServiceImpl implements IVehicleService {
+@Service
+public class  VehicleServiceImpl implements IVehicleService {
 
     private final VehicleRepository vehicleRepository;
 
