@@ -25,4 +25,13 @@ public interface FeatureRepository extends JpaRepository<Feature, String> {
     @Query("SELECT f FROM Feature f WHERE f.name = :name")
     Optional<Feature> findFeatureByName(@Param("name") String name);
 
+    @Modifying
+    @Transactional
+    @Query("update Feature set description = :description where name = :name")
+    int updateDescriptionByName(@Param("name") String name, @Param("description") String description);
+
+    @Modifying
+    @Transactional
+    @Query("delete from Feature where name = :name")
+    int deleteFeatureByName(@Param("name") String name);
 }

@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
@@ -40,5 +41,27 @@ public class FeatureController {
         return "redirect:feature-services";
     }
 
+    @GetMapping("/edit-feature/{featureName}")
+    public String editFeaturePage(@PathVariable String featureName, Model model) {
+        Feature feature = featureService.getFeatureByName(featureName);
+        model.addAttribute("editFeature", feature);
+        return "edit-feature";
+    }
 
+    @PostMapping("/edit-feature")
+    public String editFeature(@ModelAttribute("editFeature") Feature editFeature, BindingResult bindingResult) {
+        logger.info("EDIT FEATURE NAME: " + editFeature.getFeatureName());
+        logger.info("EDIT FEATURE DESCRIPTION: " + editFeature.getDescription());
+        int response = featureService.editFeature(editFeature);
+        logger.info("ROWS CHANGED IN DB: " + response);
+        return "redirect:feature-services";
+    }
+
+    @GetMapping("/delete-feature/{featureName}")
+    public String deleteFeature(@PathVariable String featureName) {
+        logger.info("DELETING FEATURE: " + featureName);
+        int response = featureService.deleteFeature(featureName);
+        logger.info("ROWS CHANGED IN DB: " + response);
+        return "redirect:../feature-services";
+    }
 }

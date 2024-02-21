@@ -11,4 +11,8 @@ public interface IFeatureService {
     List<Feature> getAll();
 
     Feature getFeatureByName(String name);
+
+    int editFeature(Feature editFeature);
+
+    int deleteFeature(String featureName);
 }

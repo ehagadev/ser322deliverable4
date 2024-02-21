@@ -50,4 +50,33 @@ public class FeatureServiceImpl implements IFeatureService {
             return null;
         }
     }
+
+    @Override
+    public int editFeature(Feature editFeature) {
+        logger.info("AT BEGINNING OF EDIT FEATURE");
+        Optional<Feature> byName = featureRepository.findFeatureByName(editFeature.getName());
+        if (byName.isPresent()) {
+            int updatedRows = featureRepository.updateDescriptionByName(editFeature.getName(), editFeature.getDescription());
+            logger.info("SUCCESSFULLY EDITED FEATURE: {}, UPDATED ROWS: {}", editFeature.getName(), updatedRows);
+            return 1;
+        } else {
+            logger.error("FEATURE NOT FOUND BY NAME: {}", editFeature.getName());
+            return 0;
+        }
+    }
+
+    @Override
+    public int deleteFeature(String featureName) {
+        logger.info("AT BEGINNING OF DELETE FEATURE");
+        Optional<Feature> byName = featureRepository.findFeatureByName(featureName);
+if (byName.isPresent()) {
+            int deletedRows = featureRepository.deleteFeatureByName(featureName);
+            logger.info("SUCCESSFULLY DELETED FEATURE: {}, DELETED ROWS: {}", featureName, deletedRows);
+            return 1;
+        } else {
+            logger.error("FEATURE NOT FOUND BY NAME: {}", featureName);
+            return 0;
+        }
+
+    }
 }
