@@ -30,7 +30,6 @@ public class VehicleServiceImpl implements IVehicleService {
         return vehicleRepository.findAll();
     }
 
-
     @Override
     public Vehicle getVehicleByVin(String vin) {
         logger.info("ATTEMPTING TO FIND VEHICLE BY VIN: {}", vin);
