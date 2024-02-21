@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Feature</title>
+</head>
+<body>
+
+<h2>Edit Feature</h2>
+
+<!-- Display feature details -->
+<th:block th:if="${editFeature != null}">
+    <form th:action="@{/edit-feature}" method="post" th:object="${editFeature}">
+        <input type="hidden" th:field="*{name}" th:value="${editFeature.name}" readonly="readonly" />
+        <p><b>Name: </b><span th:text="${editFeature.name}"></span></p>
+        <p><b>Description: </b> <input type="text" th:field="*{description}"/></p>
+
+        <input type="submit" value="Save Changes">
+    </form>
+</th:block>
+</body>
+</html>
