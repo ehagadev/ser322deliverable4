@@ -39,4 +39,8 @@ public class Feature {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getFeatureName() {
+        return name;
+    }
 }
