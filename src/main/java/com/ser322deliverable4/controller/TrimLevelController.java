@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class TrimLevelController {
@@ -57,25 +58,31 @@ public class TrimLevelController {
     public String editTrimLevel(@ModelAttribute("editTrimLevel") TrimLevel trimLevel, BindingResult bindingResult) {
         logger.info("EDIT TRIM LEVEL NAME: " + trimLevel.getName());
         logger.info("EDIT TRIM LEVEL YEAR: " + trimLevel.getYear());
-        Manufacturer manufacturer = manufacturerRepository.findByName(trimLevel.getManufacturer().getName());
-        if (manufacturer == null) {
-            logger.info("Manufacturer not found");
-            return "edit-trim-level";
+        Optional<Manufacturer> optionalManufacturer = manufacturerRepository.findByName(trimLevel.getManufacturer().getName());
+        if (optionalManufacturer.isPresent()) {
+            Manufacturer manufacturer = optionalManufacturer.get();
+            logger.info("Received manufacturer name: {}", manufacturer.getName());
+            trimLevel.setManufacturer(manufacturer);
+            int response = trimLevelService.editTrimLevel(trimLevel);
+            logger.info("ROWS CHANGED IN DB: " + response);
+            return "redirect:trim-level-services";
+        } else {
+            logger.error("No Manufacturer found with the given name: {}", trimLevel.getManufacturer().getName());
+            return "redirect:trim-level-services";
         }
-        logger.info("Received manufacturer name: {}", manufacturer.getName());
-        trimLevel.setManufacturer(manufacturer);
-        int response = trimLevelService.editTrimLevel(trimLevel);
-        logger.info("ROWS CHANGED IN DB: " + response);
-        return "redirect:trim-level-services";
     }
 
     @PostMapping("/saveTrimLevel")
     public String saveTrimLevel(@ModelAttribute("trimLevel") TrimLevel trimLevel, BindingResult bindingResult) {
-        Logger logger = LoggerFactory.getLogger(TrimLevelController.class);
-        Manufacturer manufacturer = manufacturerRepository.findByName(trimLevel.getManufacturer().getName());
-        logger.info("Received manufacturer name: {}", manufacturer.getName());
-        trimLevel.setManufacturer(manufacturer);
-        trimLevelService.addTrimLevel(trimLevel);
+        Optional<Manufacturer> optionalManufacturer = manufacturerRepository.findByName(trimLevel.getManufacturer().getName());
+        if (optionalManufacturer.isPresent()) {
+            Manufacturer manufacturer = optionalManufacturer.get();
+            logger.info("Received manufacturer name: {}", manufacturer.getName());
+            trimLevel.setManufacturer(manufacturer);
+            trimLevelService.addTrimLevel(trimLevel);
+        } else {
+            logger.error("No Manufacturer found with the given name: {}", trimLevel.getManufacturer().getName());
+        }
         return "redirect:trim-level-services";
     }
 

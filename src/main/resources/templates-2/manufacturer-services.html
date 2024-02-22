@@ -7,7 +7,9 @@
 <body>
 
 <h2>Manufacturer Services</h2>
-
+<div th:if="${error}" class="alert alert-danger" style="color:red;" role="alert">
+    <p th:text="${error}"></p>
+</div>
 <!-- Display existing users if the list is not empty -->
 <th:block th:if="${#lists.size(manList) > 0}">
     <h3>Existing Manufacturers:</h3>
@@ -15,11 +17,9 @@
         <p>Name: <span th:text="${man.name}"></span></p>
         <p>Country: <span th:text="${man.country}"></span></p>
 
-<!--        &lt;!&ndash; Controller method call GetUserById, then opens new edit form &ndash;&gt;-->
-<!--        <a th:href="@{/edit-user/{userId}(userId=${existingUser.id})}">Edit</a>-->
+        <a th:href="@{/edit-manufacturer/{manName}(manName=${man.name})}">Edit</a>
 
-<!--        &lt;!&ndash; Controller method call DeleteUserById, re-render user-services &ndash;&gt;-->
-<!--        <a th:href="@{/delete-user/{userId}(userId=${existingUser.id})}">Delete</a>-->
+        <a th:href="@{/delete-manufacturer/{manName}(manName=${man.name})}">Delete</a>
 
         <hr>
     </div>
