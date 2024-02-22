@@ -9,10 +9,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface TrimLevelRepository extends JpaRepository<TrimLevel, Long> {
+
+    @Query("SELECT t FROM TrimLevel t")
+    List<TrimLevel> findAllTrimLevels();
 
     @Query(value="INSERT INTO TRIM_LEVEL(name, \"year\", manufacturer) VALUES (:name, :year, :manufacturer)", nativeQuery=true)
     @Modifying
@@ -36,5 +40,8 @@ public interface TrimLevelRepository extends JpaRepository<TrimLevel, Long> {
     @Modifying
     @Transactional
     int deleteTrimLevelById(@Param("trimId") Long trimId);
+
+    @Query("SELECT t FROM TrimLevel t WHERE t.name = :name")
+    Optional<TrimLevel> findTrimLevelByName(@Param("name") String name);
 
 }

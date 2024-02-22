@@ -10,7 +10,7 @@ public class TrimLevel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long trimId;
 
-    @Column(length = 100)
+    @Column(unique = true, length = 100)
     private String name;
 
     @Column(name = "\"year\"")

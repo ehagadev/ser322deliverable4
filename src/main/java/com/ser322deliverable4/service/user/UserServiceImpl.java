@@ -2,10 +2,13 @@ package com.ser322deliverable4.service.user;
 
 import com.ser322deliverable4.model.User;
 import com.ser322deliverable4.repository.UserRepository;
+import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,13 +71,18 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public int deleteUser(Long userId) {
+    public int deleteUser(Long userId) throws SQLIntegrityConstraintViolationException {
         Optional<User> byId = userRepository.findUserById(userId);
         if (byId.isPresent()) {
             User user = byId.get();
-            int response = userRepository.deleteUserById(user.getId());
-            logger.info("SUCCESSFULLY DELETED USER BY ID: {}", user.getId());
-            return response;
+            try {
+                int response = userRepository.deleteUserById(user.getId());
+                logger.info("SUCCESSFULLY DELETED USER BY ID: {}", user.getId());
+                return response;
+            } catch (DataIntegrityViolationException | ConstraintViolationException ex) {
+                logger.error("UNABLE TO DELETE TRIM LEVEL: {}. It has associated references.", userId);
+                throw new SQLIntegrityConstraintViolationException("Unable to delete trim level. It has associated references", ex);
+            }
         } else {
             logger.error("UNABLE TO FIND USER BY ID: {}", userId);
             return 0;

@@ -11,7 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -87,13 +89,22 @@ public class TrimLevelController {
     }
 
     @GetMapping("/delete-trim-level/{trimId}")
-    public String deleteTrimLevel(@PathVariable Long trimId) {
+    public String deleteTrimLevel(@PathVariable Long trimId, RedirectAttributes redirectAttributes) {
+        logger.info("DELETING Trim Level: " + trimId);
         TrimLevel trimLevel = trimLevelService.getTrimLevelById(trimId);
         if (trimLevel == null) {
             logger.info("Trim level not found");
+            redirectAttributes.addFlashAttribute("error", "Trim level not found.");
             return "redirect:/trim-level-services";
         }
-        trimLevelService.deleteTrimLevel(trimId);
-        return "redirect:/trim-level-services";
+        try {
+            int response = trimLevelService.deleteTrimLevel(trimId);
+            logger.info("ROWS CHANGED IN DB: {}", response);
+            return "redirect:../trim-level-services";
+        } catch (SQLIntegrityConstraintViolationException ex) {
+            logger.error("SQL INTEGRITY CONSTRAINT VIOLATION EXCEPTION");
+            redirectAttributes.addFlashAttribute("error", "Cannot delete manufacturer due to foreign key constraint.");
+            return "redirect:/trim-level-services";
+        }
     }
 }

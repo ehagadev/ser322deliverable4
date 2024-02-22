@@ -21,6 +21,10 @@
 
 <h2>Trim Level Services</h2>
 
+<div th:if="${error}" class="alert alert-danger" style="color:red;" role="alert">
+    <p th:text="${error}"></p>
+</div>
+
 <!-- If trimLevelList is not empty, show each Trim Level -->
 <th:block th:if="${#lists.size(trimLevelList) > 0}">
     <h3>Existing Trim Levels:</h3>

@@ -2,10 +2,13 @@ package com.ser322deliverable4.service.feature;
 
 import com.ser322deliverable4.model.Feature;
 import com.ser322deliverable4.repository.FeatureRepository;
+import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,13 +69,19 @@ public class FeatureServiceImpl implements IFeatureService {
     }
 
     @Override
-    public int deleteFeature(String featureName) {
+    public int deleteFeature(String featureName) throws SQLIntegrityConstraintViolationException {
         logger.info("AT BEGINNING OF DELETE FEATURE");
         Optional<Feature> byName = featureRepository.findFeatureByName(featureName);
-if (byName.isPresent()) {
-            int deletedRows = featureRepository.deleteFeatureByName(featureName);
-            logger.info("SUCCESSFULLY DELETED FEATURE: {}, DELETED ROWS: {}", featureName, deletedRows);
-            return 1;
+        if (byName.isPresent()) {
+
+            try {
+                int deletedRows = featureRepository.deleteFeatureByName(featureName);
+                logger.info("SUCCESSFULLY DELETED FEATURE: {}, DELETED ROWS: {}", featureName, deletedRows);
+                return 1;
+            } catch (DataIntegrityViolationException | ConstraintViolationException ex) {
+                logger.error("UNABLE TO DELETE FEATURE: {}. It has associated references.", featureName);
+                throw new SQLIntegrityConstraintViolationException("Unable to delete feature. It has associated references", ex);
+            }
         } else {
             logger.error("FEATURE NOT FOUND BY NAME: {}", featureName);
             return 0;
