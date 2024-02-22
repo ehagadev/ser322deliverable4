@@ -8,6 +8,10 @@
 
 <h2>User Services</h2>
 
+<div th:if="${error}" class="alert alert-danger" style="color:red;" role="alert">
+    <p th:text="${error}"></p>
+</div>
+
 <!-- Display existing users if the list is not empty -->
 <th:block th:if="${#lists.size(userList) > 0}">
     <h3>Existing Users:</h3>
