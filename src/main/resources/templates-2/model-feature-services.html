@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Model Feature Services</title>
+</head>
+<body>
+
+<h2>Model Feature Services</h2>
+
+<th:block th:if="${#lists.size(modelFeaturesList) > 0}">
+    <h3>Existing Model Features:</h3>
+    <div th:each="mf : ${modelFeaturesList}">
+        <p>Model: <span th:text="${mf.model.name}"></span></p>
+        <p>Feature: <span th:text="${mf.feature.name}"></span></p>
+        <p>Feature Description: <span th:text="${mf.feature.description}"></span></p>
+
+        <a th:href="@{/edit-modelfeature/{modelfeature}(modelfeature=${mf.id})}">Edit</a>
+
+        <a th:href="@{/delete-modelfeature/{modelfeature}(modelfeature=${mf.id})}">Delete</a>
+
+        <hr>
+    </div>
+</th:block>
+
+
+<th:block th:if="${#lists.size(modelFeaturesList) == 0}">
+    <p>No existing model features.</p>
+</th:block>
+
+
+<!--TODO: When model is done, we can implement addition of model features-->
+
+</body>
+</html>
