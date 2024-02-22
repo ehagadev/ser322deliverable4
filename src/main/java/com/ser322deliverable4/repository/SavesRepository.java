@@ -17,10 +17,15 @@ import java.util.Objects;
 @Repository
 public interface SavesRepository extends JpaRepository<Saves, Long> {
 
+
     @Query("SELECT s FROM Saves s WHERE s.vehicle.vin = :vin")
     List<Saves> findSavesByVehicleVin(@Param("vin") String vin);
 
-	
+
+    @Query("SELECT s FROM Saves s WHERE s.user.id = :userId")
+    List<Saves> findSavesByUserId(@Param("userId") Long userId);
+
+
     @Query("INSERT INTO Saves(user, vehicle) VALUES (:user, :vehicle)")
     @Modifying
     @Transactional
@@ -34,6 +39,13 @@ public interface SavesRepository extends JpaRepository<Saves, Long> {
     @Modifying
     @Transactional
     int deleteSaveByVehicleVin(String vin);
+	
+	
+    @Query("DELETE FROM Saves s WHERE s.user.id = :userId")
+    @Modifying
+    @Transactional
+    int deleteSaveByUserId(@Param("userId") Long userId);
+
 
 
 }

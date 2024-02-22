@@ -34,7 +34,7 @@ public class SaveServiceImpl implements ISaveService {
         logger.info("SUCCESSFULLY ADDED NEW SAVE {} INTO THE DB", save.getId().getUserId());
         return save;
     }
-    
+
 
     @Override
     public int deleteSaveByVin(String vin) throws SQLIntegrityConstraintViolationException {
@@ -53,6 +53,6 @@ public class SaveServiceImpl implements ISaveService {
             return 0;
         }
     }
-
+	
 
 }
