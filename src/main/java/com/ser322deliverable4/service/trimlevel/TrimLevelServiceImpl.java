@@ -7,10 +7,13 @@ import com.ser322deliverable4.repository.ModelRepository;
 import com.ser322deliverable4.repository.TrimFeaturesRepository;
 import com.ser322deliverable4.repository.TrimLevelRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,12 +84,17 @@ public class TrimLevelServiceImpl implements ITrimLevelService {
     }
 
     @Override
-    public int deleteTrimLevel(Long trimId) {
+    public int deleteTrimLevel(Long trimId) throws SQLIntegrityConstraintViolationException {
         Optional<TrimLevel> byTrimId = trimLevelRepository.findTrimLevelById(trimId);
         if (byTrimId.isPresent()) {
-            int response = trimLevelRepository.deleteTrimLevelById(trimId);
-            logger.info("SUCCESSFULLY DELETED TRIM LEVEL BY ID: {}", trimId);
-            return response;
+            try {
+                int response = trimLevelRepository.deleteTrimLevelById(trimId);
+                logger.info("SUCCESSFULLY DELETED TRIM LEVEL BY ID: {}", trimId);
+                return response;
+            } catch (DataIntegrityViolationException | ConstraintViolationException ex) {
+                logger.error("UNABLE TO DELETE TRIM LEVEL: {}. It has associated references.", trimId);
+                throw new SQLIntegrityConstraintViolationException("Unable to delete trim level. It has associated references", ex);
+            }
         } else {
             logger.error("UNABLE TO FIND TRIM LEVEL BY ID: {}", trimId);
             return 0;

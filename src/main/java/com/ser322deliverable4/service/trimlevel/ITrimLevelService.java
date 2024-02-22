@@ -2,6 +2,7 @@ package com.ser322deliverable4.service.trimlevel;
 
 import com.ser322deliverable4.model.TrimLevel;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 public interface ITrimLevelService {
@@ -16,5 +17,5 @@ public interface ITrimLevelService {
 
     int editTrimLevel(TrimLevel trimLevel);
 
-    int deleteTrimLevel(Long trimId);
+    int deleteTrimLevel(Long trimId) throws SQLIntegrityConstraintViolationException;
 }
