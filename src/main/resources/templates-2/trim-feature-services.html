@@ -16,7 +16,7 @@
         <p><b>Feature: </b><span th:text="${tf.feature.name}"></span></p>
         <p><b>Feature Description: </b><span th:text="${tf.feature.description}"></span></p>
 
-        <p><i>Editing not possible, as Trim Features is a join table. Instead, try Creating or Deleting</i></p>
+        <p><i>Editing not possible, as Trim Features is a join table. Instead, consider creating or deleting an entry.</i></p>
         <a th:href="@{/delete-trim-feature/{trimId}/{featureName}(trimId=${tf.id.trimId}, featureName=${tf.id.featureName})}">Delete</a>        <hr>
     </div>
 </th:block>
@@ -24,7 +24,7 @@
 
 <!-- Display a message if the list is empty -->
 <th:block th:if="${#lists.size(trimFeaturesList) == 0}">
-    <p>No existing model features.</p>
+    <p>No existing trim features.</p>
 </th:block>
 
 

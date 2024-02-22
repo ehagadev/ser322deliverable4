@@ -44,11 +44,9 @@
         <p>Model Trim Level: <span th:text="${existingVehicle.model.trimLevel.name}"></span></p>
         <p>Color: <span th:text="${existingVehicle.color}"></span></p>
 
-        <!-- Controller method call GetUserById, then opens new edit form -->
-<!--        <a th:href="@{/edit-user/{userId}(userId=${existingUser.id})}">Edit</a>-->
+        <a th:href="@{/edit-vehicle/{vVin}(vVin=${existingVehicle.vin})}">Edit</a>
 
-<!--        &lt;!&ndash; Controller method call DeleteUserById, re-render user-services &ndash;&gt;-->
-<!--        <a th:href="@{/delete-user/{userId}(userId=${existingUser.id})}">Delete</a>-->
+        <a th:href="@{/delete-vehicle/{vVin}(vVin=${existingVehicle.vin})}">Delete</a>
 
         <hr>
     </div>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Vehicle</title>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function setModelName() {
+            var e = document.getElementById("modelNameSelect");
+            var selectedModelName = e.options[e.selectedIndex].text;
+
+            // log the selected manufacturer name to the console
+            console.log("Selected model: " + selectedModelName);
+
+            document.getElementById("selectedModelName").value = selectedModelName;
+        }
+        /*]]>*/
+    </script>
+</head>
+<body>
+
+<h2>Edit Vehicle</h2>
+
+<!-- Display vehicle details -->
+<th:block th:if="${vehicle != null}">
+    <form th:action="@{/edit-vehicle}" method="post" th:object="${vehicle}" id="editVehicleForm">
+        <input type="hidden" th:field="*{vin}" th:value="${vehicle.vin}" readonly="readonly" />
+
+        <p>Id: <span th:text="${vehicle.vin}"></span></p>
+        <p>Color: <input type="text" th:field="*{color}" /></p>
+
+        <select name="modelName" id="modelNameSelect">
+            <option th:each="model : ${allModels}" th:value="${model.name}" th:text="${model.name}" />
+        </select>
+
+        <input type="submit" value="Save Changes">
+    </form>
+</th:block>
+
+
+
+
+</body>
+</html>
