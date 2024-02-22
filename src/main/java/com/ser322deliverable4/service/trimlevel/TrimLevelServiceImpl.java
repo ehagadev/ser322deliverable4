@@ -1,7 +1,12 @@
 package com.ser322deliverable4.service.trimlevel;
 
+import com.ser322deliverable4.model.Model;
+import com.ser322deliverable4.model.TrimFeatures;
 import com.ser322deliverable4.model.TrimLevel;
+import com.ser322deliverable4.repository.ModelRepository;
+import com.ser322deliverable4.repository.TrimFeaturesRepository;
 import com.ser322deliverable4.repository.TrimLevelRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
@@ -13,11 +18,16 @@ import java.util.Optional;
 public class TrimLevelServiceImpl implements ITrimLevelService {
 
     private final TrimLevelRepository trimLevelRepository;
-
+    private final ModelRepository modelRepository;
+    private final TrimFeaturesRepository trimFeaturesRepository;
     private final Logger logger = LoggerFactory.getLogger(TrimLevelServiceImpl.class);
 
-    public TrimLevelServiceImpl(TrimLevelRepository trimLevelRepository) {
+    public TrimLevelServiceImpl(TrimLevelRepository trimLevelRepository,
+                                ModelRepository modelRepository,
+                                TrimFeaturesRepository trimFeaturesRepository) {
         this.trimLevelRepository = trimLevelRepository;
+        this.modelRepository = modelRepository;
+        this.trimFeaturesRepository = trimFeaturesRepository;
     }
 
     @Override
@@ -56,4 +66,39 @@ public class TrimLevelServiceImpl implements ITrimLevelService {
 
     }
 
+    @Override
+    public int editTrimLevel(TrimLevel trimLevel) {
+        logger.info("AT BEGINNING OF EDIT TRIM LEVEL");
+        Optional<TrimLevel> byTrimId = trimLevelRepository.findTrimLevelById(trimLevel.getTrimId());
+        if (byTrimId.isPresent()) {
+            int updatedRows = trimLevelRepository.updateTrimLevelByTrimId(trimLevel.getTrimId(), trimLevel.getName(), trimLevel.getYear(), trimLevel.getManufacturer());
+            logger.info("SUCCESSFULLY EDITED TRIM LEVEL: {}, UPDATED ROWS: {}", trimLevel.getName(), updatedRows);
+            return 1;
+        } else {
+            logger.error("TRIM LEVEL NOT FOUND BY ID: {}", trimLevel.getTrimId());
+            return 0;
+        }
+    }
+
+    @Override
+    public int deleteTrimLevel(Long trimId) {
+        logger.info("ATTEMPTING TO DELETE TRIM LEVEL BY ID: {}", trimId);
+        TrimLevel byTrimId = trimLevelRepository.findTrimLevelById(trimId)
+                .orElseThrow(() -> {
+                    logger.warn("TrimLevel with ID {} not found", trimId);
+                    return new EntityNotFoundException("TrimLevel not found");
+                });
+        // Remove the association from all Model entities
+        List<Model> modelsWithTrimLevel = modelRepository.findByTrimLevel(byTrimId);
+        modelsWithTrimLevel.forEach(model -> model.setTrimLevel(null));
+        modelRepository.saveAll(modelsWithTrimLevel);
+
+        // Remove the association from all TrimFeatures entities
+        List<TrimFeatures> trimFeaturesList = trimFeaturesRepository.findByTrimLevel(byTrimId);
+        trimFeaturesList.forEach(trimFeaturesRepository::delete);
+
+        int response = trimLevelRepository.deleteTrimLevelById(trimId);
+        logger.error("ROWS MODIFIED IN DB: {}", response);
+        return response;
+    }
 }

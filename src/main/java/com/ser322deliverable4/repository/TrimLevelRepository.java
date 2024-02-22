@@ -25,4 +25,16 @@ public interface TrimLevelRepository extends JpaRepository<TrimLevel, Long> {
 
     @Query(value="SELECT t FROM TrimLevel t WHERE t.trimId = :trimId")
     Optional<TrimLevel> findTrimLevelById(@Param("trimId") Long trimId);
+
+    @Modifying
+    @Transactional
+    @Query("update TrimLevel set name = :name, year = :year, manufacturer = :manufacturer where trimId = :trimId")
+    int updateTrimLevelByTrimId(@Param("trimId") Long trimId, @Param("name") String name, @Param("year") String year, @Param("manufacturer") Manufacturer manufacturer);
+
+
+    @Query("DELETE FROM TrimLevel t WHERE t.trimId = :trimId")
+    @Modifying
+    @Transactional
+    int deleteTrimLevelById(@Param("trimId") Long trimId);
+
 }

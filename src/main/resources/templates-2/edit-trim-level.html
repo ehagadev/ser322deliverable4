@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Trim Level</title>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function setManufacturerName() {
+            var e = document.getElementById("manufacturerSelect");
+            var selectedManufacturerName = e.options[e.selectedIndex].text;
+
+            // log the selected manufacturer name to the console
+            console.log("Selected manufacturer: " + selectedManufacturerName);
+
+            document.getElementById("selectedManufacturerName").value = selectedManufacturerName;
+        }
+        /*]]>*/
+    </script>
+</head>
+<body>
+
+<h2>Edit Trim Level</h2>
+
+<!-- Display trim level details -->
+<th:block th:if="${editTrimLevel != null}">
+    <form th:action="@{/edit-trim-level}" method="post" th:object="${editTrimLevel}">
+        <p>Name: <input type="text" th:field="*{name}" /></p>
+        <p>Year: <input type="text" th:field="*{year}" /></p>
+        <select th:field="*{manufacturer.name}" id="manufacturerSelect">
+            <option th:each="manufacturer : ${manufacturers}"
+                    th:value="${manufacturer.name}"
+                    th:text="${manufacturer.name}"
+                    th:selected="${manufacturer.name == editTrimLevel.manufacturer.name}" />
+        </select>
+        <input type="hidden" th:field="*{trimId}" />
+        <input type="submit" value="Save Changes">
+    </form>
+</th:block>
+</body>
+</html>

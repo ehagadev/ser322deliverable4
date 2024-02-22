@@ -13,4 +13,8 @@ public interface ITrimLevelService {
     TrimLevel getTrimLevelById(Long trimId);
 
     List<TrimLevel> getAllTrimLevels();
+
+    int editTrimLevel(TrimLevel trimLevel);
+
+    int deleteTrimLevel(Long trimId);
 }

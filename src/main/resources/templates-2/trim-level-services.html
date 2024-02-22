@@ -29,6 +29,9 @@
         <p>Year: <span th:text="${trimLevel.year}"></span></p>
         <p>Manufacturer: <span th:text="${trimLevel.manufacturer.name}"></span></p>
 
+        <a th:href="@{/edit-trim-level/{trimId}(trimId=${trimLevel.trimId})}">Edit</a>
+        <a th:href="@{/delete-trim-level/{trimId}(trimId=${trimLevel.trimId})}">Delete</a>
+
         <hr>
     </div>
 </th:block>
@@ -38,15 +41,18 @@
     <p>No existing trim levels.</p>
 </th:block>
 
+<th:block th:if="${trimLevel != null}">
+    <h3>Add a new Trim Level:</h3>
+    <form action="#" th:action="@{/saveTrimLevel}" th:object="${trimLevel}" method="post">
+        <input type="text" th:field="*{name}" placeholder="Name">
+        <input type="text" th:field="*{year}" placeholder="Year">
+        <select id="manufacturerSelect" th:field="*{manufacturer.name}">
+            <option th:each="manufacturer : ${manufacturers}" th:value="${manufacturer.name}" th:text="${manufacturer.name}" />
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+</th:block>
 
-<form action="#" th:action="@{/saveTrimLevel}" th:object="${trimLevel}" method="post">
-    <input type="text" th:field="*{name}" placeholder="Name">
-    <input type="text" th:field="*{year}" placeholder="Year">
-    <select name="manufacturerName">
-        <option th:each="manufacturer : ${manufacturers}" th:value="${manufacturer.name}" th:text="${manufacturer.name}" />
-    </select>
-    <button type="submit">Submit</button>
-</form>
 
 </body>
 </html>
