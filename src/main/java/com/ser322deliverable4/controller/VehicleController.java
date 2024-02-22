@@ -4,12 +4,16 @@ import com.ser322deliverable4.model.Feature;
 import com.ser322deliverable4.model.TrimLevel;
 import com.ser322deliverable4.model.Vehicle;
 import com.ser322deliverable4.repository.FeatureRepository;
+import com.ser322deliverable4.repository.ModelRepository;
 import com.ser322deliverable4.repository.TrimLevelRepository;
 import com.ser322deliverable4.service.vehicle.IVehicleService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,12 +27,18 @@ public class VehicleController {
 
     private final TrimLevelRepository trimLevelRepository;
 
+    private final ModelRepository modelRepository;
+
+    private final Logger logger = LoggerFactory.getLogger(VehicleController.class);
+
     public VehicleController(IVehicleService vehicleService,
                              FeatureRepository featureRepository,
-                             TrimLevelRepository trimLevelRepository) {
+                             TrimLevelRepository trimLevelRepository,
+                             ModelRepository modelRepository) {
         this.vehicleService = vehicleService;
         this.featureRepository = featureRepository;
         this.trimLevelRepository = trimLevelRepository;
+        this.modelRepository = modelRepository;
     }
 
     @GetMapping(value = "/vehicle-services")
@@ -47,6 +57,33 @@ public class VehicleController {
         model.addAttribute("allTrimLevels", allTrimLevels);
 
         return "vehicle-services";
+    }
+
+    @GetMapping("/edit-vehicle/{vVin}")
+    public String editUserPage(@PathVariable String vVin, Model model) {
+        Vehicle vehicle = vehicleService.getVehicleByVin(vVin);
+        model.addAttribute("vehicle", vehicle);
+        List<com.ser322deliverable4.model.Model> allModels = modelRepository.findAll();
+        allModels.spliterator().forEachRemaining(
+                m -> logger.info("RETRIEVED MODEL: {}", m.getName())
+        );
+
+        model.addAttribute("allModels", allModels);
+        return "edit-vehicle";
+    }
+
+    @PostMapping("/edit-vehicle")
+    public String editVehicle(@RequestParam String modelName, @ModelAttribute("editVehicle") Vehicle vehicle, BindingResult bindingResult) {
+        logger.info("EDIT VEHICLE VIN: {}", vehicle.getVin());
+        logger.info("EDIT VEHICLE MODEL NAME: {}", modelName);
+        vehicleService.editVehicle(vehicle, modelName);
+        return "redirect:vehicle-services";
+    }
+
+    @GetMapping("/delete-vehicle/{vVin}")
+    public String deleteVehicle(@PathVariable String vVin) {
+        vehicleService.deleteVehicleByVin(vVin);
+        return "redirect:../vehicle-services";
     }
 
     @GetMapping("/vehicle-by-vin")

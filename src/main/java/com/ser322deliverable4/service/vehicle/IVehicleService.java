@@ -13,4 +13,8 @@ public interface IVehicleService {
     List<Vehicle> getVehicleByFeatureName(String featureName);
 
     List<Vehicle> getVehiclesByTimeLevel(String trimLevelName);
+
+    void editVehicle(Vehicle vehicle, String modelName);
+
+    String deleteVehicleByVin(String vVin);
 }

@@ -82,23 +82,14 @@ public class TrimLevelServiceImpl implements ITrimLevelService {
 
     @Override
     public int deleteTrimLevel(Long trimId) {
-        logger.info("ATTEMPTING TO DELETE TRIM LEVEL BY ID: {}", trimId);
-        TrimLevel byTrimId = trimLevelRepository.findTrimLevelById(trimId)
-                .orElseThrow(() -> {
-                    logger.warn("TrimLevel with ID {} not found", trimId);
-                    return new EntityNotFoundException("TrimLevel not found");
-                });
-        // Remove the association from all Model entities
-        List<Model> modelsWithTrimLevel = modelRepository.findByTrimLevel(byTrimId);
-        modelsWithTrimLevel.forEach(model -> model.setTrimLevel(null));
-        modelRepository.saveAll(modelsWithTrimLevel);
-
-        // Remove the association from all TrimFeatures entities
-        List<TrimFeatures> trimFeaturesList = trimFeaturesRepository.findByTrimLevel(byTrimId);
-        trimFeaturesList.forEach(trimFeaturesRepository::delete);
-
-        int response = trimLevelRepository.deleteTrimLevelById(trimId);
-        logger.error("ROWS MODIFIED IN DB: {}", response);
-        return response;
+        Optional<TrimLevel> byTrimId = trimLevelRepository.findTrimLevelById(trimId);
+        if (byTrimId.isPresent()) {
+            int response = trimLevelRepository.deleteTrimLevelById(trimId);
+            logger.info("SUCCESSFULLY DELETED TRIM LEVEL BY ID: {}", trimId);
+            return response;
+        } else {
+            logger.error("UNABLE TO FIND TRIM LEVEL BY ID: {}", trimId);
+            return 0;
+        }
     }
 }
