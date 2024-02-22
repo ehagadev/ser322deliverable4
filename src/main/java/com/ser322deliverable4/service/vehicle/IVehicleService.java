@@ -1,6 +1,5 @@
 package com.ser322deliverable4.service.vehicle;
 
-import com.ser322deliverable4.model.User;
 import com.ser322deliverable4.model.Vehicle;
 
 import java.util.List;
@@ -11,4 +10,7 @@ public interface IVehicleService {
 
     Vehicle getVehicleByVin(String vin);
 
+    List<Vehicle> getVehicleByFeatureName(String featureName);
+
+    List<Vehicle> getVehiclesByTimeLevel(String trimLevelName);
 }

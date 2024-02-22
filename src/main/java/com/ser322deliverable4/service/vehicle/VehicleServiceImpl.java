@@ -1,11 +1,7 @@
 package com.ser322deliverable4.service.vehicle;
 
-import com.ser322deliverable4.model.User;
-//import com.ser322deliverable4.model.User;
 import com.ser322deliverable4.model.Vehicle;
-//import com.ser322deliverable4.repository.UserRepository;
 import com.ser322deliverable4.repository.VehicleRepository;
-//import com.ser322deliverable4.service.user.UserServiceImpl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +10,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-public class VehicleServiceImpl implements IVehicleService {
+@Service
+public class  VehicleServiceImpl implements IVehicleService {
 
     private final VehicleRepository vehicleRepository;
 
@@ -44,5 +41,21 @@ public class VehicleServiceImpl implements IVehicleService {
             return null;
         }
     }
-    
+
+    @Override
+    public List<Vehicle> getVehicleByFeatureName(String featureName) {
+        logger.info("ATTEMPTING TO FIND VEHICLES BY FEATURE NAME: {}", featureName);
+        List<Vehicle> vehicleByFeatureName = vehicleRepository.findVehicleByFeatureName(featureName);
+        logger.info("FOUND VEHICLES BY FEATURE NAME: {}", vehicleByFeatureName);
+        return vehicleByFeatureName;
+    }
+
+    @Override
+    public List<Vehicle> getVehiclesByTimeLevel(String trimLevelName) {
+        logger.info("ATTEMPTING TO FIND VEHICLES BY TRIM LEVEL: {}", trimLevelName);
+        List<Vehicle> vehiclesByTrimLevelName = vehicleRepository.findVehiclesByTrimLevelName(trimLevelName);
+        logger.info("FOUND VEHICLES BY TRIM LEVEL NAME: {}", vehiclesByTrimLevelName);
+        return vehiclesByTrimLevelName;
+    }
+
 }
