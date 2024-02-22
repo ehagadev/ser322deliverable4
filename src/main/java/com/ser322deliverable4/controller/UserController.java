@@ -64,7 +64,7 @@ public class UserController {
 
     @GetMapping("/delete-user/{userId}")
     public String deleteUser(@PathVariable Long userId, RedirectAttributes redirectAttributes) {
-        logger.info("EDITING USER BY ID: {}", userId);
+        logger.info("DELETING USER BY ID: {}", userId);
         try {
             int response = userService.deleteUser(userId);
             logger.info("ROWS CHANGED IN DB: {}", response);

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Model</title>
+</head>
+<body>
+
+<h2>Edit Model</h2>
+
+<div th:if="${error}" class="alert alert-danger" style="color:red;" role="alert">
+    <p th:text="${error}"></p>
+</div>
+
+<!-- Display user details -->
+<th:block th:if="${editModel != null}">
+    <form th:action="@{/edit-model}" method="post" th:object="${editModel}">
+        <input type="hidden" th:field="*{modelId}" th:value="${editModel.modelId}" readonly="readonly" />
+        <input type="hidden" th:field="*{trimLevel}" th:value="${editModel.trimLevel}" readonly="readonly" />
+
+        <p>Id: <span th:text="${editModel.modelId}"></span></p>
+        <p>Trim Level: <span th:text="${editModel.trimLevel.name}"></span></p>
+        <p>Manufacturer: <span th:text="${editModel.trimLevel.manufacturer.name}"></span></p>
+
+
+        <p>Name: <input type="text" th:field="*{name}" /></p>
+        <p>Year: <input type="text" th:field="*{year}" /></p>
+        <p>Style: <input type="text" th:field="*{style}" /></p>
+
+        <input type="submit" value="Save Changes">
+    </form>
+</th:block>
+
+
+
+
+</body>
+</html>

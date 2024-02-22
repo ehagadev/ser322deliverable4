@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Model Services</title>
+</head>
+<body>
+
+<h2>Model Services</h2>
+<div th:if="${error}" class="alert alert-danger" style="color:red;" role="alert">
+    <p th:text="${error}"></p>
+</div>
+<!-- Display existing users if the list is not empty -->
+<th:block th:if="${#lists.size(modelList) > 0}">
+    <h3>Existing Models:</h3>
+    <div th:each="model : ${modelList}">
+        <p>Id: <span th:text="${model.modelId}"></span></p>
+        <p>Name: <span th:text="${model.name}"></span></p>
+        <p>Year: <span th:text="${model.year}"></span></p>
+        <p>Style: <span th:text="${model.style}"></span></p>
+        <p>Trim Level Name: <span th:text="${model.trimLevel.name}"></span></p>
+        <p>Trim Level Year: <span th:text="${model.trimLevel.year}"></span></p>
+        <p>Manufacturer: <span th:text="${model.trimLevel.manufacturer.name}"></span></p>
+        <p>Manufacturer Country: <span th:text="${model.trimLevel.manufacturer.country}"></span></p>
+
+        <a th:href="@{/edit-model/{modelId}(modelId=${model.modelId})}">Edit</a>
+
+        <a th:href="@{/delete-model/{modelId}(modelId=${model.modelId})}">Delete</a>
+
+        <hr>
+    </div>
+</th:block>
+
+
+<!-- Display a message if the list is empty -->
+<th:block th:if="${#lists.size(modelList) == 0}">
+    <p>No existing Models.</p>
+</th:block>
+
+<!--Add a Model form-->
+<!--<th:block th:if="${manufacturer != null}">-->
+<!--    <form th:action="@{/add-manufacturer}" method="post" th:object="${manufacturer}">-->
+
+<!--        <label>Name: </label>-->
+<!--        <input type="text" th:field="*{name}" /><br>-->
+
+<!--        <label>Country: </label>-->
+<!--        <input type="text" th:field="*{country}" /><br>-->
+
+<!--        <input type="submit" value="Submit">-->
+<!--    </form>-->
+<!--</th:block>-->
+
+</body>
+</html>
+
+<script>
+<!--    // Function to open the edit user pop-up form with user details-->
+<!--    function openEditForm(user) {-->
+<!--        document.getElementById('editUserForm').style.display = 'flex';-->
+<!--        document.getElementById('editUserId').value = user.id;-->
+<!--        document.getElementById('editUserEmail').value = user.email;-->
+<!--        document.getElementById('editUserFirstName').value = user.firstName;-->
+<!--        document.getElementById('editUserLastName').value = user.lastName;-->
+<!--    }-->
+
+<!--    // Function to close the edit user pop-up form-->
+<!--    function closeEditForm() {-->
+<!--        document.getElementById('editUserForm').style.display = 'none';-->
+<!--    }-->
+</script>
