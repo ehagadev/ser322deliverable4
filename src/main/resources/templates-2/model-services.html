@@ -3,6 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Model Services</title>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function setTrimLevelName() {
+            var e = document.getElementById("trimLevelSelect");
+            var selectedTrimLevelName = e.options[e.selectedIndex].text;
+
+            // log the selected manufacturer name to the console
+            console.log("Selected trim level: " + selectedTrimLevelName);
+
+            document.getElementById("selectedTrimLevelName").value = selectedTrimLevelName;
+        }
+        /*]]>*/
+    </script>
 </head>
 <body>
 
@@ -10,7 +24,7 @@
 <div th:if="${error}" class="alert alert-danger" style="color:red;" role="alert">
     <p th:text="${error}"></p>
 </div>
-<!-- Display existing users if the list is not empty -->
+<!-- Display existing models if the list is not empty -->
 <th:block th:if="${#lists.size(modelList) > 0}">
     <h3>Existing Models:</h3>
     <div th:each="model : ${modelList}">
@@ -37,35 +51,29 @@
     <p>No existing Models.</p>
 </th:block>
 
-<!--Add a Model form-->
-<!--<th:block th:if="${manufacturer != null}">-->
-<!--    <form th:action="@{/add-manufacturer}" method="post" th:object="${manufacturer}">-->
+<!-- Add a Model form -->
+<th:block th:if="${addModelDto != null}">
+    <h3>Create New Model:</h3>
+    <form th:action="@{/add-model}" method="post" th:object="${addModelDto}">
 
-<!--        <label>Name: </label>-->
-<!--        <input type="text" th:field="*{name}" /><br>-->
+        <label>Name: </label>
+        <input type="text" th:field="*{name}" /><br>
 
-<!--        <label>Country: </label>-->
-<!--        <input type="text" th:field="*{country}" /><br>-->
+        <label>Year: </label>
+        <input type="text" th:field="*{year}" /><br>
 
-<!--        <input type="submit" value="Submit">-->
-<!--    </form>-->
-<!--</th:block>-->
+        <label>Style: </label>
+        <input type="text" th:field="*{style}" /><br>
+
+        <label>Trim Level: </label>
+        <select id="trimLevelSelect" th:field="*{trimLevelName}">
+            <option th:each="trimLevel : ${allTrimLevels}" th:value="${trimLevel.name}" th:text="${trimLevel.name}" />
+        </select>
+
+        <input type="submit" value="Submit">
+    </form>
+</th:block>
 
 </body>
 </html>
 
-<script>
-<!--    // Function to open the edit user pop-up form with user details-->
-<!--    function openEditForm(user) {-->
-<!--        document.getElementById('editUserForm').style.display = 'flex';-->
-<!--        document.getElementById('editUserId').value = user.id;-->
-<!--        document.getElementById('editUserEmail').value = user.email;-->
-<!--        document.getElementById('editUserFirstName').value = user.firstName;-->
-<!--        document.getElementById('editUserLastName').value = user.lastName;-->
-<!--    }-->
-
-<!--    // Function to close the edit user pop-up form-->
-<!--    function closeEditForm() {-->
-<!--        document.getElementById('editUserForm').style.display = 'none';-->
-<!--    }-->
-</script>

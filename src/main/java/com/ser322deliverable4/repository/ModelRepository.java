@@ -42,4 +42,14 @@ public interface ModelRepository extends JpaRepository<Model, Long> {
     @Transactional
     @Query("DELETE FROM Model m WHERE m.modelId = :modelId")
     int deleteModelById(@Param("modelId") Long modelId);
+
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO Model (name, \"year\", style, trim_level) VALUES (:name, :year, :style, :trimLevel)", nativeQuery = true)
+    int insertNewModel(
+            @Param("name") String name,
+            @Param("year") String year,
+            @Param("style") String style,
+            @Param("trimLevel") Long trimLevel
+    );
 }
