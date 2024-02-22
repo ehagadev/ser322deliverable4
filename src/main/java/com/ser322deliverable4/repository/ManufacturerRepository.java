@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Repository
 public interface ManufacturerRepository extends JpaRepository<Manufacturer, Long> {
 
@@ -19,7 +21,11 @@ public interface ManufacturerRepository extends JpaRepository<Manufacturer, Long
             @Param("country") String country
     );
 
-    @Query(value = "SELECT * FROM Manufacturer WHERE name = :name", nativeQuery = true)
-    Manufacturer findByName(@Param("name") String name);
+    @Query("SELECT m FROM Manufacturer m WHERE m.name = :name")
+    Optional<Manufacturer> findByName(@Param("name") String name);
 
+    @Query("DELETE FROM Manufacturer m WHERE m.name = :name")
+    @Modifying
+    @Transactional
+    int deleteByName(String name);
 }

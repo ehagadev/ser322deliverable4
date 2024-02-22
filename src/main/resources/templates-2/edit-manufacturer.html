@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Manufacturer</title>
+</head>
+<body>
+
+<h2>Edit Manufacturer</h2>
+
+<!-- Display user details -->
+<th:block th:if="${editManufacturer != null}">
+    <form th:action="@{/edit-manufacturer}" method="post" th:object="${editManufacturer}">
+        <p>Name: <span th:text="${editManufacturer.name}"></span></p>
+        <input type="hidden" th:field="*{name}" th:value="${editManufacturer.name}" readonly="readonly" />
+
+        <p>Country: <input type="text" th:field="*{country}" /></p>
+
+        <input type="submit" value="Save Changes">
+    </form>
+</th:block>
+
+
+
+
+</body>
+</html>
