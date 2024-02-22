@@ -8,6 +8,10 @@
 
 <h2>Feature Services</h2>
 
+<div th:if="${error}" class="alert alert-danger" style="color:red;" role="alert">
+    <p th:text="${error}"></p>
+</div>
+
 <!-- Display existing features if the list is not empty -->
 <th:block th:if="${#lists.size(featureList) > 0}">
     <h3>Existing Features:</h3>

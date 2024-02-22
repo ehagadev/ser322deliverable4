@@ -2,6 +2,8 @@ package com.ser322deliverable4.controller;
 
 import com.ser322deliverable4.model.Feature;
 import com.ser322deliverable4.service.feature.IFeatureService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,15 +11,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
-import java.util.logging.Logger;
 
 @Controller
 public class FeatureController {
     private final IFeatureService featureService;
 
-    private final Logger logger = Logger.getLogger(FeatureController.class.getName());
+    private final Logger logger = LoggerFactory.getLogger(FeatureController.class);
 
     public FeatureController(IFeatureService featureService) {
         this.featureService = featureService;
@@ -58,10 +61,16 @@ public class FeatureController {
     }
 
     @GetMapping("/delete-feature/{featureName}")
-    public String deleteFeature(@PathVariable String featureName) {
+    public String deleteFeature(@PathVariable String featureName, RedirectAttributes redirectAttributes) {
         logger.info("DELETING FEATURE: " + featureName);
-        int response = featureService.deleteFeature(featureName);
-        logger.info("ROWS CHANGED IN DB: " + response);
-        return "redirect:../feature-services";
+        try {
+            int response = featureService.deleteFeature(featureName);
+            logger.info("ROWS CHANGED IN DB: {}", response);
+            return "redirect:../feature-services";
+        } catch (SQLIntegrityConstraintViolationException ex) {
+            logger.error("SQL INTEGRITY CONSTRAINT VIOLATION EXCEPTION");
+            redirectAttributes.addFlashAttribute("error", "Cannot delete manufacturer due to foreign key constraint.");
+            return "redirect:/feature-services";
+        }
     }
 }

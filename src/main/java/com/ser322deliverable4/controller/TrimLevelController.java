@@ -90,6 +90,7 @@ public class TrimLevelController {
 
     @GetMapping("/delete-trim-level/{trimId}")
     public String deleteTrimLevel(@PathVariable Long trimId, RedirectAttributes redirectAttributes) {
+        logger.info("DELETING Trim Level: " + trimId);
         TrimLevel trimLevel = trimLevelService.getTrimLevelById(trimId);
         if (trimLevel == null) {
             logger.info("Trim level not found");
