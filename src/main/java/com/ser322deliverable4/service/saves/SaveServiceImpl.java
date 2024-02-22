@@ -28,30 +28,31 @@ public class SaveServiceImpl implements ISaveService {
     @Override
     public Saves addSave(Saves save) {
         savesRepository.addNewSave(
-                save.getUser().getId(),
-                save.getVehicle().getVin()
+                save.getUser(),
+                save.getVehicle()
         );
-        logger.info("SUCCESSFULLY ADDED NEW SAVES {} INTO THE DB", save.getId());
+        logger.info("SUCCESSFULLY ADDED NEW SAVE {} INTO THE DB", save.getId().getUserId());
         return save;
     }
-	
+    
+
     @Override
-    public int deleteSave(String vin) throws SQLIntegrityConstraintViolationException {
-        Optional<Saves> byVin = savesRepository.findByVin(vin);
-        if (byVin.isPresent()) {
+    public int deleteSaveByVin(String vin) throws SQLIntegrityConstraintViolationException {
+        List<Saves> byVin = savesRepository.findSavesByVehicleVin(vin);
+        if (byVin.size() == 1) {
             try {
-                int response = savesRepository.deleteByVin(vin);
+                int response = savesRepository.deleteSaveByVehicleVin(vin);
                 logger.info("SUCCESSFULLY DELETED SAVE BY VIN: {}", vin);
                 return response;
             } catch (DataIntegrityViolationException | ConstraintViolationException ex) {
                 logger.error("UNABLE TO DELETE VIN: {}. It has associated references.", vin);
                 throw new SQLIntegrityConstraintViolationException("Unable to delete save. It has associated references", ex);
             }
-
         } else {
             logger.error("UNABLE TO FIND SAVE BY VIN: {}", vin);
             return 0;
         }
     }
+
 
 }

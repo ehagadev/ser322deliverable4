@@ -10,6 +10,8 @@ public interface ISaveService {
 
 	Saves addSave(Saves save);
 	
-	int deleteSave(String vin) throws SQLIntegrityConstraintViolationException;
+	int deleteSaveByVin(String vin) throws SQLIntegrityConstraintViolationException;
+
 
 }
+
