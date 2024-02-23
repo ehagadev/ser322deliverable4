@@ -45,4 +45,12 @@ public class TrimFeatureId implements Serializable {
     public void setFeatureName(String featureName) {
         this.featureName = featureName;
     }
+
+    @Override
+    public String toString() {
+        return "TrimFeatureId{" +
+                "trimId=" + trimId +
+                ", featureName='" + featureName + '\'' +
+                '}';
+    }
 }

@@ -75,4 +75,15 @@ public class Model {
     public void setTrimLevel(TrimLevel trimLevel) {
         this.trimLevel = trimLevel;
     }
+
+    @Override
+    public String toString() {
+        return "Model{" +
+                "modelId=" + modelId +
+                ", name='" + name + '\'' +
+                ", year='" + year + '\'' +
+                ", style='" + style + '\'' +
+                ", trimLevel=" + trimLevel +
+                '}';
+    }
 }

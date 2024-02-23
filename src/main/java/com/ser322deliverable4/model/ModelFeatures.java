@@ -53,4 +53,13 @@ public class ModelFeatures {
     public void setFeature(Feature feature) {
         this.feature = feature;
     }
+
+    @Override
+    public String toString() {
+        return "ModelFeatures{" +
+                "id=" + id +
+                ", model=" + model +
+                ", feature=" + feature +
+                '}';
+    }
 }

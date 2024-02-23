@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Trim Feature Services</title>
+</head>
+<body>
+
+<h2>Trim Feature Services</h2>
+
+<th:block th:if="${#lists.size(trimFeaturesList) > 0}">
+    <h3>Existing Trim Features:</h3>
+    <div th:each="tf : ${trimFeaturesList}">
+        <p><b>Trim: </b><span th:text="${tf.trimLevel}"></span></p>
+        <p><b>Feature: </b><span th:text="${tf.feature}"></span></p>
+
+        <p><i>Editing not possible, as Trim Features is a join table. Instead, consider creating or deleting an entry.</i></p>
+        <a th:href="@{/delete-trim-feature/{trimId}/{featureName}(trimId=${tf.id.trimId}, featureName=${tf.id.featureName})}">Delete</a>
+        <hr>
+    </div>
+</th:block>
+
+
+<!-- Display a message if the list is empty -->
+<th:block th:if="${#lists.size(trimFeaturesList) == 0}">
+    <p>No existing trim features.</p>
+</th:block>
+
+
+<th:block th:if="${trimFeatures != null}">
+    <h3>Link a Trim Level to a Feature:</h3>
+    <form action="#" th:action="@{/add-trim-feature}" method="post">
+
+        <label for="trimLevelSelect">Trim Level:</label>
+        <select id="trimLevelSelect" name="trimLevelId">
+            <option th:each="trimLevel : ${trimLevels}" th:value="${trimLevel.trimId}" th:text="${trimLevel}" />
+        </select>
+
+        <label for="featureSelect">Feature:</label>
+        <select id="featureSelect" name="featureName">
+            <option th:each="feature : ${features}" th:value="${feature.name}" th:text="${feature.name}" />
+        </select>
+
+        <button type="submit">Submit</button>
+    </form>
+</th:block>
+
+</body>
+</html>

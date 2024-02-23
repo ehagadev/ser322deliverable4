@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Model Feature Services</title>
+</head>
+<body>
+
+<h2>Model Feature Services</h2>
+
+<th:block th:if="${#lists.size(modelFeaturesList) > 0}">
+    <h3>Existing Model Features:</h3>
+    <div th:each="mf : ${modelFeaturesList}">
+        <p><b>Model: </b><span th:text="${mf.model}"></span></p>
+        <p><b>Feature: </b><span th:text="${mf.feature}"></span></p>
+
+        <p><i>Editing not possible, as Model Features is a join table. Instead, consider creating or deleting an entry.</i></p>
+        <a th:href="@{/delete-model-feature/{modelId}/{featureName}(modelId=${mf.id.modelId}, featureName=${mf.id.featureName})}">Delete</a>
+        <hr>
+    </div>
+</th:block>
+
+
+<!-- Display a message if the list is empty -->
+<th:block th:if="${#lists.size(modelFeaturesList) == 0}">
+    <p>No existing model features.</p>
+</th:block>
+
+
+<th:block th:if="${modelFeatures != null}">
+    <h3>Link a Model to a Feature:</h3>
+    <form action="#" th:action="@{/add-model-feature}" method="post">
+        <label for="modelSelect">Model:</label>
+        <select id="modelSelect" name="modelId">
+            <option th:each="model : ${models}" th:value="${model.modelId}" th:text="${model}" />
+        </select>
+
+        <label for="featureSelect">Feature:</label>
+        <select id="featureSelect" name="featureName">
+            <option th:each="feature : ${features}" th:value="${feature.name}" th:text="${feature.name}" />
+        </select>
+
+        <button type="submit">Submit</button>
+    </form>
+</th:block>
+
+</body>
+</html>
