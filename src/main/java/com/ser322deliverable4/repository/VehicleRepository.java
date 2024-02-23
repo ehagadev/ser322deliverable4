@@ -36,6 +36,11 @@ public interface VehicleRepository extends JpaRepository<Vehicle, String> {
             "WHERE t.name = :trimLevelName")
     List<Vehicle> findVehiclesByTrimLevelName(@Param("trimLevelName") String trimLevelName);
 
+    @Query("SELECT v FROM Vehicle v " + 
+            "JOIN Model m ON v.model.modelId = m.modelId " +
+            "WHERE year = :year")
+    List<Vehicle> findVehiclesByYear(@Param("year") String year);
+
     @Modifying
     @Transactional
     @Query(value = "UPDATE vehicle SET color = :color, model = :modelId WHERE vin = :vin", nativeQuery = true)

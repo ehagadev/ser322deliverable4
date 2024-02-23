@@ -71,6 +71,12 @@
     <button type="submit">Search Vehicles By Trim Level Name</button>
 </form>
 
+<!-- Display input field and submit button to search for vehicles by year-->
+<form th:action="@{/vehicles-by-year}" method="get">
+    <input type="text" name="year" placeholder="Enter Year">
+    <button type="submit">Search Vehicles By Year</button>
+</form>
+
 
 <!-- Display a message if the list is empty -->
 <th:block th:if="${#lists.size(vehicleList) == 0}">
