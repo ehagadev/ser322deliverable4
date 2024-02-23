@@ -71,6 +71,31 @@
     <button type="submit">Search Vehicles By Trim Level Name</button>
 </form>
 
+<!-- Display input field and submit button to search for vehicles by year-->
+<form th:action="@{/vehicles-by-year}" method="get">
+    <input type="text" name="year" placeholder="Enter Year">
+    <button type="submit">Search Vehicles By Year</button>
+</form>
+
+<!-- Display input field and submit button to search for vehicles by model-->
+<form th:action="@{/vehicles-by-ModelName}" method="get">
+    <input type="text" name="modelName" placeholder="Enter Model Name">
+    <button type="submit">Search Vehicles By Model</button>
+</form>
+
+<!-- Display input field and submit button to search for vehicles by manufacturer-->
+<form th:action="@{/vehicles-by-mfg}" method="get">
+    <input type="text" name="mfg" placeholder="Enter Manufacturer">
+    <button type="submit">Search Vehicles By Manufacturer</button>
+</form>
+
+<!-- Display input field and button to search vehicles by MFG, trim level and color-->
+<form th:action="@{/vehicles-by-mtc}" method="get">
+    <input type="text" name="mfg" placeholder="Enter Manufacturer">
+    <input type="text" name="trimLevel" placeholder="Enter Trim">
+    <input type="text" name="color" placeholder="Enter Color">
+    <button type="submit">Search Vehicles By MFG, Trim & Color</button>
+</form>
 
 <!-- Display a message if the list is empty -->
 <th:block th:if="${#lists.size(vehicleList) == 0}">

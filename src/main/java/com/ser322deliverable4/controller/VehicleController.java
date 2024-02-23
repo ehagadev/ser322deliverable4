@@ -131,6 +131,88 @@ public class VehicleController {
     }
 
     /**
+     * Search for Vehicles based on a provided year
+     * @param year
+     * @param model
+     * @return
+     */
+    @GetMapping("/vehicles-by-year")
+    public String searchByYear(@RequestParam String year, Model model) {
+        List<Vehicle> vehiclesByYear = vehicleService.getVehiclesByYear(year);
+        model.addAttribute("vehicleList", vehiclesByYear);
+
+        List<Feature> allFeatures = featureRepository.findAll();
+        model.addAttribute("allFeatures", allFeatures);
+
+        List<TrimLevel> allTrimLevels = trimLevelRepository.findAll();
+        model.addAttribute("allTrimLevels", allTrimLevels);
+
+        return "vehicle-services";
+    }
+
+    /**
+     * Search for Vehicles based on a provided year
+     * @param modelName
+     * @param model
+     * @return
+     */
+    @GetMapping("/vehicles-by-ModelName")
+    public String searchByModelName(@RequestParam String modelName, Model model) {
+        List<Vehicle> vehiclesByModelName = vehicleService.getVehiclesByModelName(modelName);
+        model.addAttribute("vehicleList", vehiclesByModelName);
+
+        List<Feature> allFeatures = featureRepository.findAll();
+        model.addAttribute("allFeatures", allFeatures);
+
+        List<TrimLevel> allTrimLevels = trimLevelRepository.findAll();
+        model.addAttribute("allTrimLevels", allTrimLevels);
+
+        return "vehicle-services";
+    }
+
+    /**
+     * Search for Vehicles by manufacturer
+     * @param mfg
+     * @param model
+     * @return
+     */
+    @GetMapping("/vehicles-by-mfg")
+    public String searchByMfg(@RequestParam String mfg, Model model) {
+        List<Vehicle> vehiclesByMfg = vehicleService.getVehiclesByMfg(mfg);
+        model.addAttribute("vehicleList", vehiclesByMfg);
+
+        List<Feature> allFeatures = featureRepository.findAll();
+        model.addAttribute("allFeatures", allFeatures);
+
+        List<TrimLevel> allTrimLevels = trimLevelRepository.findAll();
+        model.addAttribute("allTrimLevels", allTrimLevels);
+
+        return "vehicle-services";
+    }
+
+    /**
+     * Search for Vehicles by manufacturer, trim level and color
+     * @param mfg
+     * @param trimLevel
+     * @param color
+     * @param model
+     * @return
+     */
+    @GetMapping("/vehicles-by-mtc")
+    public String searchByMtc(@RequestParam String mfg, @RequestParam String trimLevel, @RequestParam String color, Model model) {
+        List<Vehicle> vehiclesByMtc = vehicleService.getVehiclesByMtc(mfg, trimLevel, color);
+        model.addAttribute("vehicleList", vehiclesByMtc);
+
+        List<Feature> allFeatures = featureRepository.findAll();
+        model.addAttribute("allFeatures", allFeatures);
+
+        List<TrimLevel> allTrimLevels = trimLevelRepository.findAll();
+        model.addAttribute("allTrimLevels", allTrimLevels);
+
+        return "vehicle-services";
+    }
+
+    /**
      * Implement and Streamline this later
      * @param model
      */

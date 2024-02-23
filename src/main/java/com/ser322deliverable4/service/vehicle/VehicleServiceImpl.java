@@ -66,6 +66,38 @@ public class  VehicleServiceImpl implements IVehicleService {
         logger.info("FOUND VEHICLES BY TRIM LEVEL NAME: {}", vehiclesByTrimLevelName);
         return vehiclesByTrimLevelName;
     }
+    
+    @Override
+    public List<Vehicle> getVehiclesByYear(String year) {
+        logger.info("ATTEMPTING TO FIND VEHICLES BY YEAR: {}", year);
+        List<Vehicle> vehiclesByYear = vehicleRepository.findVehiclesByYear(year);
+        logger.info("FOUND VEHICLES BY YEAR: {}", year);
+        return vehiclesByYear;
+    }
+
+    @Override
+    public List<Vehicle> getVehiclesByModelName(String modelName) {
+        logger.info("ATTEMPTING TO FIND VEHICLES BY MODEL NAME: {}", modelName);
+        List<Vehicle> vehiclesByModelName = vehicleRepository.findVehiclesByModelName(modelName);
+        logger.info("FOUND VEHICLES BY MODEL NAME: {}", modelName);
+        return vehiclesByModelName;
+    }
+    
+    @Override
+    public List<Vehicle> getVehiclesByMfg(String mfg) {
+        logger.info("ATTEMPTING TO FIND VEHICLES BY MANUFACTURER: {}", mfg);
+        List<Vehicle> vehiclesByMfg = vehicleRepository.findVehiclesByMfg(mfg);
+        logger.info("FOUND VEHICLES BY Manufacturer: {}", mfg);
+        return vehiclesByMfg;
+    }
+
+    @Override
+    public List<Vehicle> getVehiclesByMtc(String mfg, String trimLevel, String color) {
+        logger.info("ATTEMPTING TO FIND VEHICLES BY MANUFACTURER TRIM AND COLOR: {} {} {}", mfg, trimLevel, color);
+        List<Vehicle> vehiclesByMtc = vehicleRepository.findVehiclesByMtc(mfg, trimLevel, color);
+        logger.info("FOUND VEHICLES BY MANUFACTURER TRIM AND COLOR: {} {} {}", mfg, trimLevel, color);
+        return vehiclesByMtc;
+    }
 
     @Override
     public void editVehicle(Vehicle vehicle, String modelName) {

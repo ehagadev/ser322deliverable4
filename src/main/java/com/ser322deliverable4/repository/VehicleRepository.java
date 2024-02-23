@@ -36,6 +36,31 @@ public interface VehicleRepository extends JpaRepository<Vehicle, String> {
             "WHERE t.name = :trimLevelName")
     List<Vehicle> findVehiclesByTrimLevelName(@Param("trimLevelName") String trimLevelName);
 
+    @Query("SELECT v FROM Vehicle v " + 
+            "JOIN Model m ON v.model.modelId = m.modelId " +
+            "WHERE year = :year")
+    List<Vehicle> findVehiclesByYear(@Param("year") String year);
+
+    @Query("SELECT v FROM Vehicle v " + 
+            "JOIN Model m ON v.model.modelId = m.modelId " +
+            "WHERE UPPER(m.name) = UPPER(:modelName)")
+    List<Vehicle> findVehiclesByModelName(@Param("modelName") String modelName);
+
+    @Query("SELECT v FROM Vehicle v " +
+            "JOIN Model m ON v.model.modelId = m.modelId " +
+            "JOIN Manufacturer ma ON m.trimLevel.manufacturer.name = ma.name " +
+            "WHERE UPPER(ma.name) = UPPER(:mfg)")
+    List<Vehicle> findVehiclesByMfg(@Param("mfg") String mfg);
+
+    @Query("SELECT v FROM Vehicle v " +
+            "JOIN Model m ON v.model.modelId = m.modelId " +
+            "JOIN TrimLevel t ON m.trimLevel.trimId = t.trimId " +
+            "JOIN Manufacturer ma ON m.trimLevel.manufacturer.name = ma.name " +
+            "WHERE UPPER(ma.name) = UPPER(:mfg) " +
+                "AND UPPER(t.name) = UPPER(:trimLevel) " +
+                "AND UPPER(v.color) = UPPER(:color)")
+        List<Vehicle> findVehiclesByMtc(@Param("mfg") String mfg, @Param("trimLevel") String trimLevel, @Param("color") String color);
+
     @Modifying
     @Transactional
     @Query(value = "UPDATE vehicle SET color = :color, model = :modelId WHERE vin = :vin", nativeQuery = true)
