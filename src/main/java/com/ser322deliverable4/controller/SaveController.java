@@ -3,7 +3,7 @@ package com.ser322deliverable4.controller;
 import com.ser322deliverable4.model.Saves;
 import com.ser322deliverable4.model.User;
 import com.ser322deliverable4.model.Vehicle;
-import com.ser322deliverable4.service.save.ISaveService;
+import com.ser322deliverable4.service.saves.ISaveService;
 import com.ser322deliverable4.service.user.IUserService;
 import com.ser322deliverable4.service.vehicle.IVehicleService;
 import org.slf4j.Logger;

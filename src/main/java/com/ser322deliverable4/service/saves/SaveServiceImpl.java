@@ -1,4 +1,4 @@
-package com.ser322deliverable4.service.save;
+package com.ser322deliverable4.service.saves;
 
 import com.ser322deliverable4.model.Saves;
 import com.ser322deliverable4.repository.SavesRepository;
