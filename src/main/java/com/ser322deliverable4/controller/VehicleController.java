@@ -9,13 +9,13 @@ import com.ser322deliverable4.repository.TrimLevelRepository;
 import com.ser322deliverable4.service.vehicle.IVehicleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller()
@@ -56,6 +56,9 @@ public class VehicleController {
         List<TrimLevel> allTrimLevels = trimLevelRepository.findAll();
         model.addAttribute("allTrimLevels", allTrimLevels);
 
+        List<com.ser322deliverable4.model.Model> allModels = modelRepository.findAll();
+        model.addAttribute("allModels", allModels);
+
         return "vehicle-services";
     }
 
@@ -71,6 +74,22 @@ public class VehicleController {
         model.addAttribute("allModels", allModels);
         return "edit-vehicle";
     }
+
+    @PostMapping("/add-vehicle")
+    public String addVehicle(@ModelAttribute Vehicle vehicle, @RequestParam Long modelId) {
+        Optional<com.ser322deliverable4.model.Model> modelOptional = modelRepository.findById(modelId);
+
+        if (modelOptional.isPresent()) {
+            vehicle.setModel(modelOptional.get());
+
+            vehicleService.addVehicle(vehicle);
+        } else {
+            logger.error("Model with id {} not found", modelId);
+        }
+
+        return "redirect:/vehicle-services";
+    }
+
 
     @PostMapping("/edit-vehicle")
     public String editVehicle(@RequestParam String modelName, @ModelAttribute("editVehicle") Vehicle vehicle, BindingResult bindingResult) {

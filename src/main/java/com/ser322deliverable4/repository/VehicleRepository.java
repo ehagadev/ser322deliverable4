@@ -1,5 +1,6 @@
 package com.ser322deliverable4.repository;
 
+import com.ser322deliverable4.model.Model;
 import com.ser322deliverable4.model.Vehicle;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -70,4 +71,9 @@ public interface VehicleRepository extends JpaRepository<Vehicle, String> {
     @Transactional
     @Query("DELETE FROM Vehicle v WHERE v.vin = :vin")
     void deleteByVin(@Param("vin") String vin);
+
+    @Query(value = "INSERT INTO Vehicle(vin, color, model) VALUES (:vin, :color, :model)")
+    @Modifying
+    @Transactional
+    void insertNewVehicle(String vin, String color, Model model);
 }

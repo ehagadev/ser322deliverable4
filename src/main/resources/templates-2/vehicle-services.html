@@ -51,7 +51,28 @@
         <hr>
     </div>
 </th:block>
+<hr>
 
+<!-- Add a Vehicle form -->
+<th:block th:if="${vehicle != null}">
+    <form th:action="@{/add-vehicle}" method="post" th:object="${vehicle}">
+        <label>VIN: </label>
+        <input type="text" th:field="*{vin}" /><br>
+
+        <label>Model:</label>
+        <select id="modelSelect" name="modelId">
+            <option th:each="model : ${allModels}" th:value="${model.modelId}" th:utext="${model}" />
+        </select><br>
+
+        <label>Color: </label>
+        <input type="text" th:field="*{color}" /><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</th:block>
+
+
+<hr>
 <form th:action="@{/vehicle-by-vin}" method="get">
     <input type="text" name="vin" placeholder="Enter VIN">
     <button type="submit">Search Vehicles By VIN</button>
