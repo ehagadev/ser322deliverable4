@@ -8,6 +8,10 @@
 
 <h2>Edit User</h2>
 
+<div th:if="${error}" class="alert alert-danger" style="color:red;" role="alert">
+    <p th:text="${error}"></p>
+</div>
+
 <!-- Display user details -->
 <th:block th:if="${editUser != null}">
     <form th:action="@{/edit-user}" method="post" th:object="${editUser}">

@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 
@@ -61,11 +63,17 @@ public class UserController {
     }
 
     @GetMapping("/delete-user/{userId}")
-    public String deleteUser(@PathVariable Long userId) {
-        logger.info("EDIT USER BY ID: {}", userId);
-        int response = userService.deleteUser(userId);
-        logger.info("ROWS CHANGED IN DB: {}", response);
-        return "redirect:../user-services";
+    public String deleteUser(@PathVariable Long userId, RedirectAttributes redirectAttributes) {
+        logger.info("DELETING USER BY ID: {}", userId);
+        try {
+            int response = userService.deleteUser(userId);
+            logger.info("ROWS CHANGED IN DB: {}", response);
+            return "redirect:../user-services";
+        } catch (SQLIntegrityConstraintViolationException ex) {
+            logger.error("SQL INTEGRITY CONSTRAINT VIOLATION EXCEPTION");
+            redirectAttributes.addFlashAttribute("error", "Cannot delete manufacturer due to foreign key constraint.");
+            return "redirect:../user-services";
+        }
     }
 
 }
