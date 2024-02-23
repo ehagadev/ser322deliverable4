@@ -36,6 +36,15 @@ public interface VehicleRepository extends JpaRepository<Vehicle, String> {
             "JOIN TrimLevel t ON m.trimLevel.trimId = t.trimId " +
             "WHERE t.name = :trimLevelName")
     List<Vehicle> findVehiclesByTrimLevelName(@Param("trimLevelName") String trimLevelName);
+	
+    @Query("SELECT v FROM Vehicle v " +
+            "WHERE v.model.name = :modelName")
+    List<Vehicle> findVehiclesByModelYear(@Param("modelName") String modelName);
+	
+    @Query("SELECT v FROM Vehicle v " +
+            "WHERE v.model.year = :modelYear")
+    List<Vehicle> findVehiclesBySpecificModel(@Param("modelYear") String modelYear);
+
 
     @Query("SELECT v FROM Vehicle v " + 
             "JOIN Model m ON v.model.modelId = m.modelId " +

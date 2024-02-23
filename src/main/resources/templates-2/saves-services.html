@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Saves Services</title>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function setUserName() {
+            var e = document.getElementById("userSelect");
+            var selectedUserName = e.options[e.selectedIndex].text;
+
+            // log the selected user name to the console
+            console.log("Selected user: " + selectedUserName);
+
+            document.getElementById("selectedUserName").value = selectedUserName;
+        }
+        /*]]>*/
+    </script>
+</head>
+<body>
+
+<h2>Saves Services</h2>
+<a th:href="@{/saves-services}">
+    <button>Reload All Saves</button>
+</a>
+
+<!-- Display existing saves if the list is not empty -->
+<th:block th:if="${#lists.size(savesList) > 0}">
+    <h3>Existing Saves:</h3>
+    <div th:each="existingSave : ${savesList}">
+		<p>User Email: <span th:text="${existingSave.user.email}"></span></p>
+		<p>User First Name: <span th:text="${existingSave.user.firstName}"></span></p>
+		<p>User Last Name: <span th:text="${existingSave.user.lastName}"></span></p>
+        <p>Vehicle Vin: <span th:text="${existingSave.vehicle.vin}"></span></p>
+        <p>Vehicle Model Name: <span th:text="${existingSave.vehicle.model.name}"></span></p>
+        <p>Vehicle Model Year: <span th:text="${existingSave.vehicle.model.year}"></span></p>
+        <p>Vehicle Model Style: <span th:text="${existingSave.vehicle.model.style}"></span></p>
+        <hr>
+    </div> 
+</th:block>
+
+<!-- If save list is empty, show this message: -->
+<th:block th:if="${#lists.size(savesList) == 0}">
+    <p>No existing saves.</p>
+</th:block>
+
+<th:block th:if="${#lists.size(userList) > 0}">
+    <h3>Save a new vehicle for user per email and vin:</h3>
+    <form action="#" th:action="@{/save-new-vehicle-for-user}" method="post">
+        <select id="userSelect" th:field="*{user.email}">
+            <option th:each="existingUser : ${userList}" th:value="${existingUser.email}" th:text="${existingUser.email}" />
+        </select>
+        <select id="vehicleSelect" th:field="*{vehicle.vin}">
+            <option th:each="existingVehicle : ${vehicleList}" th:value="${existingVehicle.vin}" th:text="${existingVehicle.vin}" />
+        </select>
+        <button type="submit">Save</button>
+    </form>
+</th:block>
+
+</body>
+</html>
+
+
