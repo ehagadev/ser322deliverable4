@@ -13,6 +13,10 @@ Before running the application, make sure you have the following installed:
 - [Java](https://www.oracle.com/java/technologies/javase-downloads.html) (version 8 or later)
 - [Maven](https://maven.apache.org/download.cgi)
 
+## Video Walk-Through Link
+
+[YouTube_link](www.youtube.com)
+
 ## Getting Started
 
 1. Clone the repository:
@@ -38,3 +42,10 @@ Before running the application, make sure you have the following installed:
 - Spring Boot
 - Thymeleaf
 - H2 Database
+
+## System Architecture
+- (UI/View) Forms in the front to accept query parameters, upon submission we hit an endpoint in a controller method where those input parameters are passed
+- (UI/View) Controller consumes input parameters (either an object or primitive data types) and calls a service method based on that specific query and passed in parameters
+- Service Method handles business logic, i.e.,  calls repo layer where actual query is defined with the proper SQL statement and annotated to a java method (see user repo for example). Service method passes response from the repo layer back up to the controller
+- Define actual query statement on a java method (done in the repository interface)
+- (UI/View) Controller takes service layer response and displays/renders template for user
