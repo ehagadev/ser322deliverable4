@@ -25,4 +25,6 @@ public interface IVehicleService {
     void editVehicle(Vehicle vehicle, String modelName);
 
     String deleteVehicleByVin(String vVin);
+
+    Vehicle addVehicle(Vehicle vehicle);
 }

@@ -50,4 +50,13 @@ public class Vehicle {
         this.color = color;
     }
 
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "vin='" + vin + '\'' +
+                ", model=" + model +
+                ", color='" + color + '\'' +
+                '}';
+    }
+
 }

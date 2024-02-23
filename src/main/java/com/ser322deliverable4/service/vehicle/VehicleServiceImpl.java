@@ -131,4 +131,11 @@ public class  VehicleServiceImpl implements IVehicleService {
         return response;
     }
 
+    @Override
+    public Vehicle addVehicle(Vehicle vehicle) {
+        vehicleRepository.save(vehicle);
+        logger.info("SUCCESSFULLY ADDED NEW VEHICLE {} INTO THE DB", vehicle);
+        return vehicle;
+    }
+
 }
