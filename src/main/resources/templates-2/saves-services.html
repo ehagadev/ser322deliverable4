@@ -6,39 +6,16 @@
 
     <script th:inline="javascript">
         /*<![CDATA[*/
-        //function setFeatureName() {
-        //    var e = document.getElementById("userSelect");
-        //    var selectedFeatureName = e.options[e.selectedIndex].text;
-        //
-            // log the selected manufacturer name to the console
-        //    console.log("Selected user: " + selectedFeatureName);
-
-        //    document.getElementById("selectedFeatureName").value = selectedFeatureName;
-        //}
-        //function setTrimLevelName() {
-        //    var e = document.getElementById("trimLevelNameSelect");
-        //    var selectedTrimLevelName = e.options[e.selectedIndex].text;
-
-            // log the selected manufacturer name to the console
-        //    console.log("Selected Trim Level: " + selectedTrimLevelName);
-
-        //    document.getElementById("selectedTrimLevelName").value = selectedTrimLevelName;
-        //}
-        /*]]>*/
-		
-        /*<![CDATA[*/
         function setUserName() {
             var e = document.getElementById("userSelect");
             var selectedUserName = e.options[e.selectedIndex].text;
 
-            // log the selected manufacturer name to the console
+            // log the selected user name to the console
             console.log("Selected user: " + selectedUserName);
 
             document.getElementById("selectedUserName").value = selectedUserName;
         }
         /*]]>*/
-		
-		
     </script>
 </head>
 <body>
@@ -47,7 +24,6 @@
 <a th:href="@{/saves-services}">
     <button>Reload All Saves</button>
 </a>
-
 
 <!-- Display existing saves if the list is not empty -->
 <th:block th:if="${#lists.size(savesList) > 0}">
@@ -69,46 +45,20 @@
     <p>No existing saves.</p>
 </th:block>
 
-
-
 <th:block th:if="${#lists.size(userList) > 0}">
-    <h3>Save a new vehicle for user:</h3>
+    <h3>Save a new vehicle for user per email and vin:</h3>
     <form action="#" th:action="@{/save-new-vehicle-for-user}" method="post">
-	
         <select id="userSelect" th:field="*{user.email}">
             <option th:each="existingUser : ${userList}" th:value="${existingUser.email}" th:text="${existingUser.email}" />
         </select>
-		
         <select id="vehicleSelect" th:field="*{vehicle.vin}">
             <option th:each="existingVehicle : ${vehicleList}" th:value="${existingVehicle.vin}" th:text="${existingVehicle.vin}" />
         </select>
-		
         <button type="submit">Save</button>
-		
-
-
     </form>
 </th:block>
 
-
-
 </body>
 </html>
-
-<!--<script>-->
-<!--    // Function to open the edit user pop-up form with user details-->
-<!--    function openEditForm(user) {-->
-<!--        document.getElementById('editUserForm').style.display = 'flex';-->
-<!--        document.getElementById('editUserId').value = user.id;-->
-<!--        document.getElementById('editUserEmail').value = user.email;-->
-<!--        document.getElementById('editUserFirstName').value = user.firstName;-->
-<!--        document.getElementById('editUserLastName').value = user.lastName;-->
-<!--    }-->
-
-<!--    // Function to close the edit user pop-up form-->
-<!--    function closeEditForm() {-->
-<!--        document.getElementById('editUserForm').style.display = 'none';-->
-<!--    }-->
-<!--</script>-->
 
 

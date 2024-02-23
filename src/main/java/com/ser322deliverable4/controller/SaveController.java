@@ -27,8 +27,6 @@ import java.util.Optional;
 @Controller
 public class SaveController {
 
-    //private final IVehicleService vehicleService;
-
     private final IUserService userService;
 
     private final ISaveService savesService;
@@ -52,12 +50,6 @@ public class SaveController {
 
     @GetMapping("/saves-services")
     public String getAllSaves(Model model) {
-        //List<User> userList = userService.getAllUsers();
-        //model.addAttribute("userList", userList);
-
-        //List<Vehicle> vehicleList = vehicleSerice.getAllVehicles();
-        //model.addAtrribute("vehicleList", vehicleList);
-		
         Saves save = new Saves();
         model.addAttribute("save", save);
 		
@@ -84,17 +76,13 @@ public class SaveController {
 										@ModelAttribute("vehicle") Vehicle vehicle, 
 										BindingResult bindingResult) {
 
-        //logger.info("RECEIVED USER: {}", user.getFirstName());
-        //logger.info("RECEIVED VEHICLE: {}", vehicle.getVin());
         logger.info("RECEIVED USER: {}", user.getEmail());
         logger.info("RECEIVED VEHICLE: {}", vehicle);
 
 		Optional<User> optionalUser = userRepository.findUserByEmail(user.getEmail());
-//		User user1 = optionalUser.get();
 		User user1 = user;
 		
 		Optional<Vehicle> optionalVehicle = vehicleRepository.findVehicleByVin(vehicle.getVin());
-//		Vehicle vehicle1 = optionalVehicle.get();
 		Vehicle vehicle1 = vehicle;
 		
         if (optionalUser.isPresent()) {
@@ -110,30 +98,13 @@ public class SaveController {
         } else {
             logger.error("No vehicle found with the given vin: {}", vehicle1.getVin());
         }
-		
+
 		Saves newSave = new Saves(user1, vehicle1);
 		savesService.addSave(newSave);
-        
 		
 		return "redirect:saves-services";
     }
 
-
-
-/*
-    @PostMapping("/saveNewVehicleForUserr")
-    public String saveTrimLevel(@ModelAttribute("trimLevel") TrimLevel trimLevel, BindingResult bindingResult) {
-        Optional<Manufacturer> optionalManufacturer = manufacturerRepository.findByName(trimLevel.getManufacturer().getName());
-        if (optionalManufacturer.isPresent()) {
-            Manufacturer manufacturer = optionalManufacturer.get();
-            logger.info("Received manufacturer name: {}", manufacturer.getName());
-            trimLevel.setManufacturer(manufacturer);
-            trimLevelService.addTrimLevel(trimLevel);
-        } else {
-            logger.error("No Manufacturer found with the given name: {}", trimLevel.getManufacturer().getName());
-        }
-        return "redirect:trim-level-services";
-    }
-*/
-
 }
+
+

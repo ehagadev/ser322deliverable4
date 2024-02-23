@@ -24,8 +24,8 @@ public class SaveServiceImpl implements ISaveService {
     public SaveServiceImpl(SavesRepository saveRepository) {
         this.savesRepository = saveRepository;
     }
-	
-	
+
+
     @Override
     public List<Saves> getAllSaves() {
         logger.info("FETCHING ALL SAVES");
@@ -36,10 +36,6 @@ public class SaveServiceImpl implements ISaveService {
     @Override
 	@Transactional
     public Saves addSave(Saves save) {
-        //savesRepository.addNewSave(
-        //       save.getUser(),
-        //       save.getVehicle()
-        //);
 		savesRepository.save(save);
         logger.info("SUCCESSFULLY ADDED NEW SAVE {} INTO THE DB", save.getId().getUserId());
         return save;
