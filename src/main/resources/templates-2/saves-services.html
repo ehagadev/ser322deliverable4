@@ -53,6 +53,7 @@
 <th:block th:if="${#lists.size(savesList) > 0}">
     <h3>Existing Saves:</h3>
     <div th:each="existingSave : ${savesList}">
+		<p>User Email: <span th:text="${existingSave.user.email}"></span></p>
 		<p>User First Name: <span th:text="${existingSave.user.firstName}"></span></p>
 		<p>User Last Name: <span th:text="${existingSave.user.lastName}"></span></p>
         <p>Vehicle Vin: <span th:text="${existingSave.vehicle.vin}"></span></p>
@@ -82,7 +83,7 @@
             <option th:each="existingVehicle : ${vehicleList}" th:value="${existingVehicle.vin}" th:text="${existingVehicle.vin}" />
         </select>
 		
-        <button type="submit">Submit</button>
+        <button type="submit">Save</button>
 		
 
 
