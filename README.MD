@@ -15,7 +15,8 @@ Before running the application, make sure you have the following installed:
 
 ## Video Walk-Through Link
 
-[YouTube_link](https://www.youtube.com/){:target="_blank"}
+- [YouTube_link](https://www.youtube.com/watch?v=sHyT7nBe-GY)
+- Submission URL: https://www.youtube.com/watch?v=sHyT7nBe-GY
 
 ## Getting Started
 
