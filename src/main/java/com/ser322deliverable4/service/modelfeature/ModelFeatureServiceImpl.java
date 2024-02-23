@@ -23,9 +23,7 @@ public class ModelFeatureServiceImpl implements IModelFeatureService {
 
     @Override
     public ModelFeatures addModelFeature(ModelFeatures modelFeature) {
-        modelFeaturesRepository.insertNewModelFeature(
-                modelFeature.getId(), modelFeature.getModel(), modelFeature.getFeature()
-        );
+        modelFeaturesRepository.save(modelFeature);
         logger.info("SUCCESSFULLY ADDED NEW MODEL FEATURE '{} - {}' INTO THE DB", modelFeature.getModel(), modelFeature.getFeature());
         return modelFeature;
     }

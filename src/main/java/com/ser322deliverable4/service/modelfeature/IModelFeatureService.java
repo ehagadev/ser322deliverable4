@@ -16,4 +16,5 @@ public interface IModelFeatureService {
     int editModelFeature(ModelFeatures editedModelFeature);
 
     int deleteModelFeature(ModelFeatureId modelFeatureId);
+
 }

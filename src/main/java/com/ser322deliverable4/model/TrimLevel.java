@@ -63,4 +63,14 @@ public class TrimLevel {
     public void setManufacturer(Manufacturer manufacturerEntity) {
         this.manufacturer = manufacturerEntity;
     }
+
+    @Override
+    public String toString() {
+        return "TrimLevel{" +
+                "trimId=" + trimId +
+                ", name='" + name + '\'' +
+                ", year='" + year + '\'' +
+                ", manufacturer=" + manufacturer +
+                '}';
+    }
 }

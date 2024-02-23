@@ -43,4 +43,12 @@ public class Feature {
     public String getFeatureName() {
         return name;
     }
+
+    @Override
+    public String toString() {
+        return "Feature{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

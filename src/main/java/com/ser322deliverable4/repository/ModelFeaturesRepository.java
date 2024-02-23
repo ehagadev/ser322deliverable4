@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Repository
-public interface ModelFeaturesRepository extends JpaRepository<ModelFeatures, Long> {
+public interface ModelFeaturesRepository extends JpaRepository<ModelFeatures, ModelFeatureId> {
 
     @Query("INSERT INTO ModelFeatures(id, model, feature) VALUES (:id, :model, :feature)")
     @Modifying

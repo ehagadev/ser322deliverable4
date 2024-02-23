@@ -11,25 +11,38 @@
 <th:block th:if="${#lists.size(modelFeaturesList) > 0}">
     <h3>Existing Model Features:</h3>
     <div th:each="mf : ${modelFeaturesList}">
-        <p>Model: <span th:text="${mf.model.name}"></span></p>
-        <p>Feature: <span th:text="${mf.feature.name}"></span></p>
-        <p>Feature Description: <span th:text="${mf.feature.description}"></span></p>
+        <p><b>Model: </b><span th:text="${mf.model}"></span></p>
+        <p><b>Feature: </b><span th:text="${mf.feature}"></span></p>
 
-        <a th:href="@{/edit-modelfeature/{modelfeature}(modelfeature=${mf.id})}">Edit</a>
-
-        <a th:href="@{/delete-modelfeature/{modelfeature}(modelfeature=${mf.id})}">Delete</a>
-
+        <p><i>Editing not possible, as Model Features is a join table. Instead, consider creating or deleting an entry.</i></p>
+        <a th:href="@{/delete-model-feature/{modelId}/{featureName}(modelId=${mf.id.modelId}, featureName=${mf.id.featureName})}">Delete</a>
         <hr>
     </div>
 </th:block>
 
 
+<!-- Display a message if the list is empty -->
 <th:block th:if="${#lists.size(modelFeaturesList) == 0}">
     <p>No existing model features.</p>
 </th:block>
 
 
-<!--TODO: When model is done, we can implement addition of model features-->
+<th:block th:if="${modelFeatures != null}">
+    <h3>Link a Model to a Feature:</h3>
+    <form action="#" th:action="@{/add-model-feature}" method="post">
+        <label for="modelSelect">Model:</label>
+        <select id="modelSelect" name="modelId">
+            <option th:each="model : ${models}" th:value="${model.modelId}" th:text="${model}" />
+        </select>
+
+        <label for="featureSelect">Feature:</label>
+        <select id="featureSelect" name="featureName">
+            <option th:each="feature : ${features}" th:value="${feature.name}" th:text="${feature.name}" />
+        </select>
+
+        <button type="submit">Submit</button>
+    </form>
+</th:block>
 
 </body>
 </html>

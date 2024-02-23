@@ -45,10 +45,13 @@ public class TrimFeatureController {
 
         List<TrimFeatures> trimFeaturesList = trimFeatureService.getAllTrimFeatures();
         model.addAttribute("trimFeaturesList", trimFeaturesList);
+
         List<TrimLevel> trimLevels = trimLevelRepository.findAll();
         model.addAttribute("trimLevels", trimLevels);
+
         List<Feature> features = featureRepository.findAll();
         model.addAttribute("features", features);
+
         return "trim-feature-services";
     }
 
@@ -75,7 +78,7 @@ public class TrimFeatureController {
     public String deleteTrimFeature(@PathVariable Long trimId, @PathVariable String featureName) {
         TrimFeatureId trimfeatureid = new TrimFeatureId(trimId, featureName);
 
-        logger.info("DELETING TRIM FEATURE: {}", trimfeatureid.toString());
+        logger.info("DELETING TRIM FEATURE: {}", trimfeatureid);
 
         Optional<TrimFeatures> optionalTrimFeatures = trimFeaturesRepository.findById(trimfeatureid);
         if (optionalTrimFeatures.isEmpty()) {
