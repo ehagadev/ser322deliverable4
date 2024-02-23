@@ -76,6 +76,14 @@ public class  VehicleServiceImpl implements IVehicleService {
     }
 
     @Override
+    public List<Vehicle> getVehiclesByModelName(String modelName) {
+        logger.info("ATTEMPTING TO FIND VEHICLES BY MODEL NAME: {}", modelName);
+        List<Vehicle> vehiclesByModelName = vehicleRepository.findVehiclesByModelName(modelName);
+        logger.info("FOUND VEHICLES BY MODEL NAME: {}", modelName);
+        return vehiclesByModelName;
+    }
+
+    @Override
     public void editVehicle(Vehicle vehicle, String modelName) {
         Vehicle foundByVin = vehicleRepository.findVehicleByVin(vehicle.getVin())
                 .orElseThrow(() -> new EntityNotFoundException("Vehicle not found with VIN: " + vehicle.getVin()));

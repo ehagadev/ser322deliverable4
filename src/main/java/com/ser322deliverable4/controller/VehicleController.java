@@ -151,6 +151,26 @@ public class VehicleController {
     }
 
     /**
+     * Search for Vehicles based on a provided year
+     * @param modelName
+     * @param model
+     * @return
+     */
+    @GetMapping("/vehicles-by-ModelName")
+    public String searchByModelName(@RequestParam String modelName, Model model) {
+        List<Vehicle> vehiclesByModelName = vehicleService.getVehiclesByModelName(modelName);
+        model.addAttribute("vehicleList", vehiclesByModelName);
+
+        List<Feature> allFeatures = featureRepository.findAll();
+        model.addAttribute("allFeatures", allFeatures);
+
+        List<TrimLevel> allTrimLevels = trimLevelRepository.findAll();
+        model.addAttribute("allTrimLevels", allTrimLevels);
+
+        return "vehicle-services";
+    }
+
+    /**
      * Implement and Streamline this later
      * @param model
      */

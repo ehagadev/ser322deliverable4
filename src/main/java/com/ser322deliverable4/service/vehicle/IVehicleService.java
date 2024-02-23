@@ -16,6 +16,8 @@ public interface IVehicleService {
 
     List<Vehicle> getVehiclesByYear(String year);
 
+    List<Vehicle> getVehiclesByModelName(String modelName);
+
     void editVehicle(Vehicle vehicle, String modelName);
 
     String deleteVehicleByVin(String vVin);
