@@ -23,6 +23,13 @@ public class SaveServiceImpl implements ISaveService {
     public SaveServiceImpl(SavesRepository saveRepository) {
         this.savesRepository = saveRepository;
     }
+	
+	
+    @Override
+    public List<Saves> getAllSaves() {
+        logger.info("FETCHING ALL SAVES");
+        return savesRepository.findAll();
+    }
 
 
     @Override
