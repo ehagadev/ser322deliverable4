@@ -171,6 +171,26 @@ public class VehicleController {
     }
 
     /**
+     * Search for Vehicles by manufacturer
+     * @param mfg
+     * @param model
+     * @return
+     */
+    @GetMapping("/vehicles-by-mfg")
+    public String searchByMfg(@RequestParam String mfg, Model model) {
+        List<Vehicle> vehiclesByMfg = vehicleService.getVehiclesByMfg(mfg);
+        model.addAttribute("vehicleList", vehiclesByMfg);
+
+        List<Feature> allFeatures = featureRepository.findAll();
+        model.addAttribute("allFeatures", allFeatures);
+
+        List<TrimLevel> allTrimLevels = trimLevelRepository.findAll();
+        model.addAttribute("allTrimLevels", allTrimLevels);
+
+        return "vehicle-services";
+    }
+
+    /**
      * Implement and Streamline this later
      * @param model
      */

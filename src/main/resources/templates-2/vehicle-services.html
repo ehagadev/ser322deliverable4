@@ -83,6 +83,12 @@
     <button type="submit">Search Vehicles By Model</button>
 </form>
 
+<!-- Display input field and submit button to search for vehicles by manufacturer-->
+<form th:action="@{/vehicles-by-mfg}" method="get">
+    <input type="text" name="mfg" placeholder="Enter Manufacturer">
+    <button type="submit">Search Vehicles By Manufacturer</button>
+</form>
+
 <!-- Display a message if the list is empty -->
 <th:block th:if="${#lists.size(vehicleList) == 0}">
     <p>No vehicles found in Query.</p>

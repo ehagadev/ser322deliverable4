@@ -18,6 +18,8 @@ public interface IVehicleService {
 
     List<Vehicle> getVehiclesByModelName(String modelName);
 
+    List<Vehicle> getVehiclesByMfg(String mfg);
+
     void editVehicle(Vehicle vehicle, String modelName);
 
     String deleteVehicleByVin(String vVin);

@@ -82,6 +82,14 @@ public class  VehicleServiceImpl implements IVehicleService {
         logger.info("FOUND VEHICLES BY MODEL NAME: {}", modelName);
         return vehiclesByModelName;
     }
+    
+    @Override
+    public List<Vehicle> getVehiclesByMfg(String mfg) {
+        logger.info("ATTEMPTING TO FIND VEHICLES BY MANUFACTURER: {}", mfg);
+        List<Vehicle> vehiclesByMfg = vehicleRepository.findVehiclesByMfg(mfg);
+        logger.info("FOUND VEHICLES BY Manufacturer: {}", mfg);
+        return vehiclesByMfg;
+    }
 
     @Override
     public void editVehicle(Vehicle vehicle, String modelName) {
