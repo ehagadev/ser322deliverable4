@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,11 +34,13 @@ public class SaveServiceImpl implements ISaveService {
 
 
     @Override
+	@Transactional
     public Saves addSave(Saves save) {
-        savesRepository.addNewSave(
-                save.getUser(),
-                save.getVehicle()
-        );
+        //savesRepository.addNewSave(
+        //       save.getUser(),
+        //       save.getVehicle()
+        //);
+		savesRepository.save(save);
         logger.info("SUCCESSFULLY ADDED NEW SAVE {} INTO THE DB", save.getId().getUserId());
         return save;
     }

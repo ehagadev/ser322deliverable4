@@ -31,6 +31,15 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findUserById(@Param("userId") Long userId);
 
     /**
+     * returns wrapped in Optional in case User is null
+     * @param userId
+     * @return
+     */
+    @Query("SELECT u FROM User u WHERE u.email = :email")
+    Optional<User> findUserByEmail(@Param("email") String email);
+
+
+    /**
      * returns number of rows effected
      * @param userId
      * @param firstName

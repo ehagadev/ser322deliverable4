@@ -26,8 +26,8 @@ public interface SavesRepository extends JpaRepository<Saves, Long> {
     List<Saves> findSavesByUserId(@Param("userId") Long userId);
 
 
+	@Modifying
     @Query("INSERT INTO Saves(user, vehicle) VALUES (:user, :vehicle)")
-    @Modifying
     @Transactional
     void addNewSave(
             @Param("user") User user,

@@ -16,7 +16,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.ser322deliverable4.repository.UserRepository;
+import com.ser322deliverable4.repository.VehicleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -29,6 +34,13 @@ public class SaveController {
     private final ISaveService savesService;
 	
 	private final IVehicleService vehicleService;
+	
+    @Autowired
+    private UserRepository userRepository;
+	
+    @Autowired
+    private VehicleRepository vehicleRepository;
+	
 
     private final Logger logger = LoggerFactory.getLogger(SaveController.class);
 
@@ -49,6 +61,12 @@ public class SaveController {
         Saves save = new Saves();
         model.addAttribute("save", save);
 		
+        User user = new User();
+        model.addAttribute("user", user);
+		
+        Vehicle vehicle = new Vehicle();
+        model.addAttribute("vehicle", vehicle);
+		
         List<User> userList = userService.getAllUsers();
         model.addAttribute("userList", userList);
 
@@ -62,15 +80,42 @@ public class SaveController {
     }
 	
     @PostMapping("/save-new-vehicle-for-user")
-    public String saveNewVehicleForUser(@ModelAttribute("save") Saves save, BindingResult bindingResult) {
-		//User user = userService.getUserById();
-		//Vehicle vehice = vehicleService.getVehicleByVin();
-		//Save
-		//savesService.addSave(save);
-        //logger.info("RECEIVED USER: {}", user.getEmail());
-        //userService.addUser(user);
-        //logger.info("SAVED USER: {}", user.getEmail());
-        return "redirect:saves-services";
+    public String saveNewVehicleForUser(@ModelAttribute("user") User user, 
+										@ModelAttribute("vehicle") Vehicle vehicle, 
+										BindingResult bindingResult) {
+
+        //logger.info("RECEIVED USER: {}", user.getFirstName());
+        //logger.info("RECEIVED VEHICLE: {}", vehicle.getVin());
+        logger.info("RECEIVED USER: {}", user.getEmail());
+        logger.info("RECEIVED VEHICLE: {}", vehicle);
+
+		Optional<User> optionalUser = userRepository.findUserByEmail(user.getEmail());
+//		User user1 = optionalUser.get();
+		User user1 = user;
+		
+		Optional<Vehicle> optionalVehicle = vehicleRepository.findVehicleByVin(vehicle.getVin());
+//		Vehicle vehicle1 = optionalVehicle.get();
+		Vehicle vehicle1 = vehicle;
+		
+        if (optionalUser.isPresent()) {
+            user1 = optionalUser.get();
+            logger.info("Received user userid: {}", user1.getId());
+        } else {
+            logger.error("No user found with the given id: {}", user1.getId());
+        }
+
+        if (optionalVehicle.isPresent()) {
+            vehicle1 = optionalVehicle.get();
+            logger.info("Received vehicle vin: {}", vehicle1.getVin());
+        } else {
+            logger.error("No vehicle found with the given vin: {}", vehicle1.getVin());
+        }
+		
+		Saves newSave = new Saves(user1, vehicle1);
+		savesService.addSave(newSave);
+        
+		
+		return "redirect:saves-services";
     }
 
 
