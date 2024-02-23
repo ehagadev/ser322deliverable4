@@ -15,7 +15,7 @@ Before running the application, make sure you have the following installed:
 
 ## Video Walk-Through Link
 
-[YouTube_link](https://www.youtube.com/)
+[YouTube_link](https://www.youtube.com/){:target="_blank"}
 
 ## Getting Started
 
