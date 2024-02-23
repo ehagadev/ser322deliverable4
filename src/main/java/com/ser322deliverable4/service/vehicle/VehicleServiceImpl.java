@@ -92,6 +92,14 @@ public class  VehicleServiceImpl implements IVehicleService {
     }
 
     @Override
+    public List<Vehicle> getVehiclesByMtc(String mfg, String trimLevel, String color) {
+        logger.info("ATTEMPTING TO FIND VEHICLES BY MANUFACTURER TRIM AND COLOR: {} {} {}", mfg, trimLevel, color);
+        List<Vehicle> vehiclesByMtc = vehicleRepository.findVehiclesByMtc(mfg, trimLevel, color);
+        logger.info("FOUND VEHICLES BY MANUFACTURER TRIM AND COLOR: {} {} {}", mfg, trimLevel, color);
+        return vehiclesByMtc;
+    }
+
+    @Override
     public void editVehicle(Vehicle vehicle, String modelName) {
         Vehicle foundByVin = vehicleRepository.findVehicleByVin(vehicle.getVin())
                 .orElseThrow(() -> new EntityNotFoundException("Vehicle not found with VIN: " + vehicle.getVin()));

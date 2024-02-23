@@ -20,6 +20,8 @@ public interface IVehicleService {
 
     List<Vehicle> getVehiclesByMfg(String mfg);
 
+    List<Vehicle> getVehiclesByMtc(String mfg, String trimLevel, String color);
+
     void editVehicle(Vehicle vehicle, String modelName);
 
     String deleteVehicleByVin(String vVin);
